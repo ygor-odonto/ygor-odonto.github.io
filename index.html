@@ -86,6 +86,107 @@ input:focus-visible,textarea:focus-visible,button:focus-visible,.chk input:focus
 .acts{display:flex;flex-wrap:wrap;gap:8px}
 [hidden]{display:none!important}
 @media(prefers-reduced-motion:no-preference){.ov.on .sheet{animation:up .25s ease-out}@keyframes up{from{transform:translateY(16px);opacity:0}}}
+/* ===== v2: agenda, pacientes, orçamentos ===== */
+.top .cfgb{margin-left:auto}
+.nav{display:flex;padding:0 max(2vw,8px);position:sticky;top:0;background:var(--bg);z-index:7;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav button{flex:1 0 auto;min-height:56px;border:0;background:none;color:var(--mute);font:700 12.5px Lato,sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:4px 8px;border-bottom:3px solid transparent;cursor:pointer}
+.nav svg,.ic svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.nav button[aria-current=page]{color:var(--ink);border-color:var(--br)}
+.tabs{top:57px}
+.pg{max-width:760px;margin:0 auto;padding:4px 16px 130px}
+.hd{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.hd h1{margin-bottom:4px}
+select,input[type=time],input[type=search],input[type=number],input[type=password]{font:16px Lato,sans-serif;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-height:46px;width:100%}
+select:focus-visible,a:focus-visible,.it:focus-visible{outline:3px solid var(--br);outline-offset:2px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.sp{flex:1}
+.lk{background:none;border:0;color:var(--br);font:700 14px Lato,sans-serif;padding:12px 0 0;cursor:pointer;min-height:44px}
+.list{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.it{display:flex;gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer;text-align:left;width:100%;font:inherit;color:inherit}
+.it .h{font:700 17px Lato,sans-serif;font-variant-numeric:tabular-nums;min-width:50px}
+.it .m{flex:1}
+.it .m b{display:block;font-size:16px;line-height:1.3}
+.it .m small{display:block;color:var(--mute);font-size:13.5px;line-height:1.35}
+.it .v{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.it.cancelado .m b{text-decoration:line-through;color:var(--mute)}
+.av{flex:none;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--pill);color:var(--br);font:700 15px Lato,sans-serif}
+.wa{flex:none;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#1E7A46;border:1px solid var(--line);background:var(--card)}
+.wa svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.chip{display:inline-flex;align-items:center;min-height:26px;padding:0 10px;border-radius:999px;font:700 12px Lato,sans-serif;background:var(--pill);color:var(--ink);white-space:nowrap}
+.chip.confirmado{background:light-dark(#DCEBF5,#1E3242);color:light-dark(#1D4E73,#A9D0EE)}
+.chip.atendido,.chip.aprovado,.chip.feito{background:light-dark(#DDF0E3,#1C3527);color:light-dark(#1E5C38,#9FDDB5)}
+.chip.faltou,.chip.perdido{background:light-dark(#F8E0DC,#40211D);color:light-dark(#8E2B1F,#FFB2A6)}
+.chip.cancelado{background:transparent;border:1px solid var(--line);color:var(--mute)}
+.chip.aberto{background:light-dark(#FBEBD3,#3D2C14);color:light-dark(#7A4B0C,#F2C886)}
+.seg{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--card)}
+.seg button{flex:1;min-height:42px;border:0;background:none;font:700 14px Lato,sans-serif;color:var(--mute);padding:0 14px;cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--dk);color:#F5ECE5}
+.agn{margin-top:14px}
+.agt{font:italic 600 24px/1.2 'Cormorant Garamond',serif;margin:14px 2px 0}
+.agn .seg{flex:none}.seg button{flex:1 0 auto}
+.card.mini{padding:12px 14px}
+.dayh{display:flex;justify-content:space-between;align-items:baseline;margin:18px 2px 0;font:italic 600 20px 'Cormorant Garamond',serif}
+.dayh small{font:400 13px Lato,sans-serif;color:var(--mute);text-transform:none}
+.dayh.hj{color:var(--br)}
+.empty{color:var(--mute);text-align:center;padding:26px 10px;border:1px dashed var(--line);border-radius:14px;margin-top:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-top:12px}
+details.card summary{cursor:pointer;font-weight:700;min-height:28px;display:flex;align-items:center;gap:8px}
+.alerta{border-color:light-dark(#E8C9A0,#5A4122);background:light-dark(#FFF8EE,#2B2116)}
+.mini{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:10px 0;border-top:1px solid var(--line)}
+.mini .m{flex:1 1 160px}.mini small{color:var(--mute);display:block}
+.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:14px 0}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px}
+.kpi small{display:block;color:var(--mute);font-size:12.5px;line-height:1.25}
+.kpi b{display:block;font-size:18px;font-variant-numeric:tabular-nums;margin-top:2px}
+@media(max-width:420px){.kpi b{font-size:15.5px}}
+.pf h1{margin-top:8px}
+.pf .lead span+span::before{content:" · "}
+.pf .al{margin-top:10px;padding:10px 12px;border-radius:10px;background:light-dark(#FBE5E1,#3B1F1B);color:light-dark(#8E2B1F,#FFB2A6);font-weight:700;font-size:14.5px}
+.acg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:14px}
+.acg .btn{padding:0 8px;font-size:14px;display:flex;align-items:center;justify-content:center;text-decoration:none}
+.tl{list-style:none;margin:10px 0 0;padding:0 0 0 18px;border-left:2px solid var(--line)}
+.tl li{position:relative;padding:8px 0 12px}
+.tl li::before{content:"";position:absolute;left:-25px;top:13px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--br)}
+.tl li.fut::before{border-style:dashed}
+.tl .d{font-size:12.5px;color:var(--mute);font-variant-numeric:tabular-nums}
+.tl button{all:unset;cursor:pointer;display:block;width:100%}
+.tl button:focus-visible{outline:3px solid var(--br);outline-offset:2px;border-radius:6px}
+.tl b{display:block}.tl small{color:var(--mute);display:block}
+h2.pt{font:italic 600 26px/1.2 'Cormorant Garamond',serif;margin:24px 0 4px}
+.et{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;margin-top:14px}
+.eth{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.eth input{font:italic 600 21px 'Cormorant Garamond',serif;border:0;background:none;padding:4px 2px;min-height:40px;color:var(--ink);flex:1}
+.eth .v{font-weight:700;font-variant-numeric:tabular-nums}
+.oi{display:grid;grid-template-columns:68px minmax(0,1fr) auto;gap:12px;align-items:center;padding:8px 4px;border-top:1px solid var(--line);cursor:pointer;background:none;border-left:0;border-right:0;border-bottom:0;width:100%;text-align:left;font:inherit;color:inherit}
+.oi img{width:68px;border-radius:10px;display:block}
+.oi b{display:block;line-height:1.25}.oi small{color:var(--mute);font-size:13px}
+.oi .v{font-weight:700;font-variant-numeric:tabular-nums;text-align:right}
+.oi .chip{margin-top:3px}
+.add{width:100%;margin-top:8px;border-style:dashed}
+.cat{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:12px}
+.cat button{border:1px solid var(--line);background:var(--card);border-radius:14px;padding:6px 6px 10px;text-align:left;cursor:pointer;font:inherit;color:inherit}
+.cat img{width:100%;display:block;border-radius:10px}
+.cat b{display:block;font-size:14px;line-height:1.25;margin:6px 4px 2px}
+.cat small{color:var(--br);font-weight:700;margin:0 4px}
+.sheet .big{width:100%;max-width:360px;display:block;margin:4px auto 10px;border:0;border-radius:18px}
+.sheet .grid{margin-top:12px}
+.faces{display:flex;gap:6px;flex-wrap:wrap}
+.faces label{position:relative}
+.faces input{position:absolute;opacity:0;width:1px;height:1px}
+.faces span{display:inline-grid;place-items:center;min-width:46px;min-height:44px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-weight:700;cursor:pointer}
+.faces input:checked+span{background:var(--dk);color:#F5ECE5;border-color:var(--dk)}
+.faces input:focus-visible+span{outline:3px solid var(--br);outline-offset:2px}
+.tot{margin-top:16px;background:var(--dk);color:#F5ECE5;border-radius:16px;padding:14px 18px}
+.tot div{display:flex;justify-content:space-between;gap:10px;font-variant-numeric:tabular-nums;padding:2px 0}
+.tot .g{font-size:22px;font-weight:700;border-top:1px solid rgba(245,236,229,.3);margin-top:6px;padding-top:8px}
+.assimg{width:100%;max-height:170px;object-fit:contain;background:#fff;border:1px solid var(--line);border-radius:12px;display:block}
+.cr{display:grid;grid-template-columns:76px minmax(0,1fr) 44px;gap:10px;align-items:start;padding:10px 0;border-top:1px solid var(--line)}
+.cr img{width:76px;border-radius:10px}
+.cr .g2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:6px;margin-top:6px}
+.cr textarea{min-height:58px;margin-top:6px;font-size:14px}
+.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:999px;font-weight:700;font-size:14px;z-index:20;max-width:90vw;text-align:center}
+.sheet h2+.note{margin-top:4px}
 </style>
 </head>
 <body>
@@ -93,6 +194,96 @@ input:focus-visible,textarea:focus-visible,button:focus-visible,.chk input:focus
 <svg viewBox="12 10 134 136" aria-hidden="true"><defs><linearGradient id="bz" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#A97A5A"/><stop offset=".5" stop-color="#7A5038"/><stop offset="1" stop-color="#9A6A4C"/></linearGradient></defs><path fill="url(#bz)" d="M106.23 143.85C106.33 143.60 107.09 143.29 108.11 143.09C108.65 142.99 109.43 142.79 109.82 142.65C110.22 142.51 111.05 142.24 111.65 142.05C114.36 141.23 116.76 140.26 118.50 139.31C120.90 137.98 121.42 137.68 122.91 136.73C130.86 131.63 136.24 125.49 138.81 118.59C139.99 115.41 140.46 113.58 140.91 110.31C141.52 105.92 141.51 103.22 140.90 99.95C140.80 99.40 140.64 98.55 140.55 98.05C140.46 97.55 140.14 96.43 139.84 95.55C139.53 94.67 139.16 93.59 139.00 93.14C138.18 90.75 136.86 88.50 133.81 84.30C131.70 81.38 128.65 78.37 123.49 74.09C122.80 73.52 121.72 72.62 121.09 72.09C120.03 71.20 119.32 70.64 115.41 67.62C114.61 67.00 113.68 66.25 113.35 65.97C112.78 65.47 110.16 63.31 107.39 61.06C105.70 59.69 101.71 55.69 100.64 54.30C98.84 51.97 97.57 49.61 97.03 47.60C96.84 46.86 96.61 46.02 96.53 45.75C96.45 45.48 96.34 44.51 96.28 43.60C96.12 41.12 96.29 39.62 97.05 36.68C97.39 35.39 99.28 31.57 100.50 29.75C100.75 29.36 101.13 28.78 101.33 28.45C102.56 26.42 105.30 23.72 108.40 21.47C111.65 19.12 116.52 16.70 119.73 15.85C120.27 15.71 120.85 15.53 121.03 15.45C121.20 15.38 121.75 15.24 122.25 15.15C122.75 15.06 123.69 14.85 124.35 14.69C125.00 14.53 126.04 14.33 126.65 14.25C130.33 13.75 131.22 13.59 131.27 13.44C131.35 13.20 129.07 12.90 127.17 12.90C125.68 12.90 120.69 13.32 119.42 13.55C118.32 13.74 115.80 14.29 115.45 14.40C115.28 14.45 114.30 14.70 113.25 14.94C109.62 15.79 107.24 16.81 103.28 19.23C98.89 21.91 94.88 25.73 92.58 29.45C89.70 34.10 88.45 37.19 87.76 41.40C87.42 43.46 87.40 43.66 87.39 46.30C87.37 49.05 87.37 49.05 87.78 51.35C88.20 53.74 88.81 56.00 89.44 57.47C89.62 57.90 89.83 58.43 89.90 58.65C90.36 60.10 92.64 63.78 94.28 65.73C96.82 68.75 99.93 71.87 102.55 74.04C102.93 74.36 103.72 75.02 104.30 75.50C104.88 75.99 106.09 76.98 107.00 77.70C107.91 78.42 109.05 79.37 109.55 79.80C110.46 80.59 111.77 81.64 113.91 83.30C116.34 85.18 119.77 88.25 122.01 90.55C125.63 94.27 128.61 98.46 129.25 100.76C129.34 101.08 129.59 101.89 129.80 102.55C131.30 107.22 131.24 112.06 129.64 117.07C128.13 121.80 126.63 124.45 123.28 128.37C120.76 131.31 118.79 133.07 115.26 135.53C110.47 138.88 107.15 140.48 102.20 141.83C99.93 142.45 99.67 142.50 96.95 142.80C95.91 142.92 94.43 143.10 93.67 143.21C91.99 143.44 90.26 143.45 88.48 143.24C86.76 143.04 84.38 143.01 83.88 143.18C83.53 143.30 83.10 143.71 83.10 143.91C83.10 143.96 88.21 144.00 94.64 144.00C104.64 144.00 106.19 143.98 106.23 143.85ZM78.45 140.24C78.65 140.16 78.86 139.74 79.44 138.25C79.88 137.14 80.54 135.65 81.51 133.63C82.16 132.27 82.13 131.40 81.40 131.10C80.98 130.92 80.41 131.01 79.30 131.43C78.67 131.66 77.82 131.87 76.82 132.04C74.56 132.42 73.95 132.77 73.95 133.68C73.95 134.27 74.23 134.84 75.57 136.96C76.12 137.83 76.72 138.84 76.91 139.19C77.41 140.13 77.89 140.45 78.45 140.24ZM73.15 130.49C73.51 130.38 74.56 130.13 75.48 129.94C76.40 129.75 77.71 129.44 78.40 129.25C79.09 129.06 80.08 128.82 80.61 128.71C84.71 127.87 86.56 125.98 85.40 123.81C84.78 122.65 83.91 122.28 82.45 122.54C80.07 122.98 73.22 124.52 71.70 124.96C70.30 125.37 69.30 126.43 69.30 127.50C69.30 128.84 70.96 130.70 72.16 130.70C72.34 130.70 72.78 130.61 73.15 130.49ZM72.85 121.71C73.32 121.54 74.49 121.25 75.43 121.05C76.38 120.85 77.76 120.49 78.50 120.25C80.48 119.62 82.48 119.02 83.05 118.89C84.20 118.61 85.12 117.94 85.55 117.03C85.95 116.22 85.72 115.12 85.02 114.37C84.14 113.43 83.05 113.30 81.60 113.94C80.80 114.30 78.86 114.79 77.05 115.09C76.66 115.16 75.91 115.32 75.37 115.46C74.82 115.60 73.63 115.84 72.71 115.99C70.90 116.30 70.52 116.45 69.78 117.09C68.51 118.21 68.46 119.81 69.64 121.16C70.42 122.06 71.35 122.22 72.85 121.71ZM72.18 112.85C72.93 112.61 74.18 112.27 74.95 112.09C75.72 111.92 77.03 111.58 77.86 111.35C78.69 111.11 79.75 110.84 80.21 110.75C80.67 110.65 81.16 110.53 81.30 110.48C81.44 110.43 82.04 110.25 82.63 110.09C83.95 109.73 84.52 109.45 85.07 108.88C86.57 107.32 86.22 105.10 84.39 104.56C83.65 104.34 83.05 104.36 82.09 104.65C81.63 104.79 80.68 105.04 79.98 105.20C78.27 105.60 76.51 106.04 75.00 106.45C74.31 106.64 73.21 106.88 72.54 107.00C71.22 107.22 70.39 107.47 69.76 107.84C69.16 108.19 68.15 109.28 68.00 109.74C67.64 110.83 68.47 112.42 69.73 113.04C70.41 113.39 70.59 113.37 72.18 112.85ZM71.88 103.90C75.07 103.10 77.77 102.39 78.35 102.20C78.68 102.10 79.50 101.87 80.18 101.70C80.86 101.54 81.49 101.36 81.59 101.30C81.69 101.25 82.33 101.07 83.01 100.90C84.92 100.43 85.87 99.62 86.25 98.14C86.53 97.03 86.13 96.09 85.04 95.34C84.52 94.98 84.41 94.95 83.70 94.91C82.97 94.88 82.80 94.92 81.43 95.38C79.60 96.00 78.55 96.29 74.80 97.20C69.74 98.43 69.15 98.66 68.19 99.82C67.30 100.90 67.19 102.02 67.89 103.04C68.24 103.55 68.59 103.82 69.16 104.04C70.02 104.37 70.05 104.37 71.88 103.90ZM70.27 94.96C70.66 94.77 71.74 94.41 72.67 94.15C73.59 93.89 74.75 93.56 75.25 93.40C75.75 93.24 76.78 92.95 77.55 92.76C78.32 92.56 79.35 92.30 79.85 92.16C80.34 92.03 81.36 91.78 82.11 91.61C82.86 91.43 83.75 91.16 84.09 91.00C85.30 90.42 86.40 89.00 86.40 88.01C86.40 87.07 85.55 85.80 84.66 85.39C84.02 85.10 83.51 85.15 82.07 85.65C81.36 85.90 80.34 86.21 79.81 86.35C79.28 86.48 77.52 86.95 75.90 87.41C74.28 87.86 72.28 88.40 71.45 88.62C69.39 89.16 68.52 89.59 67.66 90.51C66.85 91.37 66.61 91.85 66.60 92.61C66.60 93.67 67.06 94.50 67.94 95.01C68.67 95.43 69.32 95.41 70.27 94.96ZM68.90 85.70C69.49 85.47 71.28 84.99 73.17 84.56C74.88 84.17 76.51 83.70 78.48 83.04C79.21 82.80 79.87 82.60 79.96 82.60C80.05 82.60 80.71 82.40 81.43 82.17C82.16 81.93 83.00 81.67 83.30 81.60C84.59 81.30 85.56 80.63 85.94 79.80C86.12 79.38 86.14 79.09 86.19 75.75C86.30 68.65 86.31 68.72 85.59 68.34C85.11 68.10 67.53 68.16 67.06 68.41C66.39 68.77 66.36 68.91 66.39 72.04C66.43 77.52 66.60 84.26 66.70 84.75C66.93 85.90 67.62 86.19 68.90 85.70ZM85.65 66.25C86.06 66.09 86.24 65.71 86.16 65.21C86.09 64.77 84.44 62.32 83.26 60.91C82.77 60.33 82.07 59.45 81.70 58.95C81.32 58.45 80.62 57.57 80.13 56.99C79.65 56.40 78.89 55.46 78.44 54.89C77.99 54.32 76.80 52.85 75.79 51.64C74.78 50.42 73.54 48.89 73.03 48.24C72.15 47.09 71.23 46.00 68.05 42.32C66.33 40.34 64.62 38.30 63.17 36.50C61.79 34.79 60.78 33.60 59.30 31.94C57.77 30.22 56.41 28.61 55.76 27.72C52.51 23.34 52.58 23.46 52.53 22.40C52.49 21.78 52.53 21.52 52.74 20.91C53.05 20.02 53.06 19.70 52.81 19.39C52.62 19.15 52.62 19.15 47.93 19.07C40.25 18.95 16.72 19.03 16.28 19.18C15.54 19.43 15.70 19.68 16.85 20.01C19.91 20.90 23.04 21.95 24.65 22.62C25.77 23.08 29.14 25.02 30.24 25.84C30.94 26.35 32.67 27.77 32.95 28.05C34.53 29.64 40.39 36.16 42.20 38.35C42.39 38.58 43.09 39.37 43.75 40.09C45.99 42.55 46.38 43.04 50.30 48.21C51.98 50.42 54.60 53.69 56.25 55.60C57.49 57.05 58.83 58.67 59.58 59.64C59.93 60.09 60.83 61.14 61.58 61.99C62.89 63.47 63.36 64.03 64.25 65.19C65.04 66.22 65.12 66.24 68.35 66.30C75.23 66.43 85.29 66.41 85.65 66.25Z"/></svg>
 <div class="brand"><b id="b-nome"></b><span id="b-esp"></span><span class="cro" id="b-cro"></span></div>
 </header>
+<nav class="nav" aria-label="Seções">
+<button type="button" data-pg="agenda"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>Agenda</button>
+<button type="button" data-pg="pacientes"><svg viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3.5"/><path d="M2.5 20c.6-3.6 3.2-5.5 6.5-5.5s5.9 1.9 6.5 5.5M15.5 5.2a3.3 3.3 0 0 1 0 6.6M17.5 14.8c2.2.6 3.6 2.4 4 5.2"/></svg>Pacientes</button>
+<button type="button" data-pg="orcs"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>Orçamentos</button>
+<button type="button" data-pg="fichas"><svg viewBox="0 0 24 24"><rect x="5" y="4.5" width="14" height="17" rx="2"/><path d="M9 4.5V3h6v1.5M8.5 10h7M8.5 14h7M8.5 18h4"/></svg>Fichas</button>
+<button type="button" data-pg="cfg"><svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>Ajustes</button>
+</nav>
+
+<section class="pg" id="pg-agenda" hidden>
+<div class="hd"><h1>Agenda</h1><button type="button" class="btn pri sm" id="ag-novo">+ Agendar</button></div>
+<div class="row agn"><button type="button" class="btn sm" id="ag-prev" aria-label="Anterior">‹</button><button type="button" class="btn sm" id="ag-hoje">Hoje</button><button type="button" class="btn sm" id="ag-next" aria-label="Próximo">›</button><span class="sp"></span>
+<div class="seg" id="ag-modo" role="group" aria-label="Visualização"><button type="button" data-m="dia">Dia</button><button type="button" data-m="sem">Semana</button></div></div>
+<p class="agt" id="ag-tit" aria-live="polite"></p>
+<div id="ag-alert"></div>
+<div id="ag-list"></div>
+</section>
+
+<section class="pg" id="pg-pacientes" hidden>
+<div class="hd"><h1>Pacientes</h1><button type="button" class="btn pri sm" id="pc-novo">+ Novo paciente</button></div>
+<input type="search" id="pc-busca" placeholder="Buscar por nome, telefone ou CPF" aria-label="Buscar paciente" style="margin-top:12px">
+<div class="list" id="pc-list"></div>
+</section>
+
+<section class="pg pf" id="pg-paciente" hidden>
+<button type="button" class="lk" data-back="pacientes">‹ Pacientes</button>
+<div id="pp"></div>
+</section>
+
+<section class="pg" id="pg-orcs" hidden>
+<div class="hd"><h1>Orçamentos</h1><button type="button" class="btn pri sm" id="or-novo">+ Novo orçamento</button></div>
+<div class="kpis" id="or-kpi"></div>
+<div class="seg" id="or-filt" role="group" aria-label="Filtrar"><button type="button" data-f="aberto">Abertos</button><button type="button" data-f="aprovado">Aprovados</button><button type="button" data-f="perdido">Perdidos</button><button type="button" data-f="">Todos</button></div>
+<div class="list" id="or-list"></div>
+</section>
+
+<section class="pg" id="pg-orc" hidden>
+<button type="button" class="lk" data-back="orcs">‹ Orçamentos</button>
+<div class="hd"><div><h1>Plano de Tratamento</h1><p class="lead" id="oe-pac"></p></div></div>
+<div class="seg" id="oe-st" role="group" aria-label="Situação" style="margin-top:14px"><button type="button" data-s="aberto">Em aberto</button><button type="button" data-s="aprovado">Aprovado</button><button type="button" data-s="perdido">Não fechou</button></div>
+<label class="f" id="oe-motw" style="margin-top:10px" hidden>Motivo<select id="oe-mot"><option value="">Selecione</option><option>Achou caro</option><option>Vai pensar</option><option>Fez em outro lugar</option><option>Sem retorno do paciente</option><option>Outro</option></select></label>
+<div id="oe-etapas"></div>
+<button type="button" class="btn sm" id="oe-addet" style="margin-top:10px">+ Nova etapa</button>
+<fieldset><legend>Condições</legend>
+<div class="grid">
+<label class="f c3">Desconto<input type="text" id="oe-desc" inputmode="decimal" autocomplete="off" placeholder="0"></label>
+<div class="f c3" style="display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute)">Tipo de desconto<div class="seg" id="oe-dt" role="group" aria-label="Tipo de desconto"><button type="button" data-d="R$">R$</button><button type="button" data-d="%">%</button></div></div>
+<label class="f c4">Forma de pagamento<input type="text" id="oe-pgto" list="dl-pgto" autocomplete="off"></label>
+<label class="f c2">Validade (dias)<input type="number" id="oe-val" min="1" inputmode="numeric"></label>
+<label class="f c6">Observações para o paciente<textarea id="oe-obs"></textarea></label>
+</div></fieldset>
+<div class="tot" id="oe-tot"></div>
+<fieldset><legend>Aprovação do paciente</legend>
+<div id="oe-assw"></div>
+<div id="oe-padw"><div class="sigh"><span>Assinatura do(a) paciente (opcional)</span><button type="button" class="btn sm" id="oe-limpa">Limpar</button></div>
+<div class="sig" id="po"><canvas aria-label="Área de assinatura do paciente"></canvas><div class="ln"></div><div class="ph">Assine aqui com o dedo</div></div></div>
+</fieldset>
+<div class="acts" style="margin-top:18px"><a class="btn" id="oe-wa" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;text-decoration:none">Enviar resumo no WhatsApp</a><button type="button" class="btn" id="oe-del">Excluir orçamento</button></div>
+<div class="bar"><button type="button" class="btn ghost" data-back="orcs">Voltar</button><button type="button" class="btn pri" id="oe-pdf">Gerar PDF</button></div>
+</section>
+
+<section class="pg" id="pg-cfg" hidden>
+<h1>Ajustes</h1>
+<fieldset><legend>Agenda e mensagens</legend>
+<div class="grid">
+<label class="f c6">Clínicas onde atende (separe por vírgula)<input type="text" id="cf-cli" autocomplete="off"></label>
+<label class="f c3">Duração padrão da consulta<select id="cf-dur"></select></label>
+<label class="f c3">Lembrete de manutenção após<select id="cf-ret"></select></label>
+<label class="f c6">Mensagem de confirmação<textarea id="cf-mconf"></textarea></label>
+<label class="f c6">Mensagem de lembrete de manutenção<textarea id="cf-mret"></textarea></label>
+</div>
+<p class="note">Use {nome}, {dia}, {hora} e {clinica} para preencher automaticamente.</p>
+</fieldset>
+<fieldset><legend>Procedimentos e valores</legend>
+<p class="note" style="margin-top:0">Os valores vêm como exemplo. Ajuste à sua tabela; os orçamentos já feitos não mudam.</p>
+<div id="cf-cat"></div>
+<button type="button" class="btn sm" id="cf-addcat" style="margin-top:10px">+ Procedimento</button>
+</fieldset>
+<fieldset><legend>Cópia de segurança</legend>
+<p class="note" style="margin-top:0" id="cf-bk"></p>
+<div class="acts" style="margin-top:10px"><button type="button" class="btn pri sm" id="cf-exp">Fazer cópia agora</button>
+<label class="btn sm" style="display:inline-flex;align-items:center">Restaurar cópia<input type="file" id="cf-imp" accept=".odonto,application/json,application/octet-stream" hidden></label></div>
+</fieldset>
+<p class="note" style="margin-top:24px">Versão piloto 2. Pacientes, agenda e orçamentos ficam guardados somente neste aparelho.</p>
+</section>
+
+<datalist id="dl-pac"></datalist><datalist id="dl-cli"></datalist><datalist id="dl-proc"></datalist>
+<datalist id="dl-pgto"><option>À vista (Pix ou dinheiro)</option><option>Cartão de débito</option><option>Cartão de crédito em até 3x</option><option>Cartão de crédito em até 6x</option><option>Cartão de crédito em até 10x</option><option>Entrada + parcelas mensais</option></datalist>
+<div class="ov" id="md" role="dialog" aria-modal="true"><div class="sheet" id="md-s"></div></div>
+
+<div id="pg-fichas" hidden>
 <nav class="tabs" aria-label="Formulários">
 <button type="button" data-t="anamnese" aria-selected="true">Ficha de Anamnese</button>
 <button type="button" data-t="termo" aria-selected="false">Termo</button>
@@ -106,7 +297,8 @@ input:focus-visible,textarea:focus-visible,button:focus-visible,.chk input:focus
 <label class="f c2">Data<input type="date" id="data"></label>
 <label class="f c2 cl">Clínica (opcional)<input type="text" id="clinica" autocomplete="off"></label>
 </div>
-<p class="note">Os dados ficam só neste aparelho enquanto a página está aberta. Nada é enviado pela internet: o PDF é gerado aqui mesmo.</p>
+<label class="f" style="margin-top:12px">Paciente cadastrado<input type="text" id="f-pac" list="dl-pac" autocomplete="off" placeholder="Buscar pelo nome"></label>
+<p class="note" id="f-vinc"></p>
 </fieldset>
 
 <section class="view" id="anamnese">
@@ -194,6 +386,7 @@ input:focus-visible,textarea:focus-visible,button:focus-visible,.chk input:focus
 <button type="button" class="btn ghost" id="novo">Nova ficha</button>
 <button type="button" class="btn pri" id="gerar">Gerar PDF</button>
 </div>
+</div>
 
 <div class="ov" id="ov" role="dialog" aria-modal="true" aria-labelledby="ov-t">
 <div class="sheet">
@@ -252,7 +445,7 @@ $('#termo-txt').innerHTML='<p><b>Eu, o(a) paciente identificado(a) acima,</b> '+
 document.addEventListener('change',e=>{const r=e.target;if(r.type==='radio'){const m=r.closest('.q').querySelector('.more');if(m){m.hidden=r.value!=='Sim'}}});
 const hoje=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
 $('#data').value=hoje();
-$('#cidade').value=CONFIG.cidade;$('#b-nome').textContent=PROFU;$('#b-esp').textContent=CONFIG.especialidade;$('#b-cro').textContent=CONFIG.cro;$('#sig-prof').textContent=PROF+' – '+CONFIG.cro;document.title='Fichas · '+PROF;
+$('#cidade').value=CONFIG.cidade;$('#b-nome').textContent=PROFU;$('#b-esp').textContent=CONFIG.especialidade;$('#b-cro').textContent=CONFIG.cro;$('#sig-prof').textContent=PROF+' – '+CONFIG.cro;document.title=PROF;
 
 /* implantes */
 let impN=0;
@@ -412,9 +605,9 @@ $('#gerar').onclick=async()=>{if(!validar()){(aba==='anamnese'?$('#a-err'):$('#t
  const b=$('#gerar');b.disabled=true;b.textContent='Gerando…';
  try{await Promise.all(['600 23px "Cormorant Garamond"','italic 600 34px "Cormorant Garamond"','400 13px Lato','700 13px Lato','italic 400 13px Lato'].map(f=>document.fonts.load(f).catch(()=>0)));
   const R=aba==='anamnese'?buildAnamnese():buildTermo();const blob=await toPDF(R.pages);atual={blob,name:nomeArq()};
-  $('#ov-img').src=R.pages[0].toDataURL('image/jpeg',.7);$('#ov-info').textContent=`${atual.name} · ${R.pages.length} página${R.pages.length>1?'s':''} · ${Math.round(blob.size/1024)} KB`;msg('');
+  $('#ov-img').hidden=false;$('#ov-img').src=R.pages[0].toDataURL('image/jpeg',.7);$('#ov-info').textContent=`${atual.name} · ${R.pages.length} página${R.pages.length>1?'s':''} · ${Math.round(blob.size/1024)} KB`;msg('');
   let canShare=false;try{canShare=!dl&&!!navigator.canShare&&navigator.canShare({files:[new File([blob],atual.name,{type:'application/pdf'})]})}catch(_){}
-  $('#compart').hidden=!canShare;$('#ov').classList.add('on');$('#salvar').focus()}
+  $('#compart').hidden=!canShare;$('#ov').classList.add('on');$('#salvar').focus();aposFicha(R,blob,atual.name).then(x=>{if(x)$('#ov-info').textContent+=x})}
  catch(err){(aba==='anamnese'?$('#a-err'):$('#t-err')).textContent='Não foi possível gerar o PDF neste aparelho.'}
  finally{b.disabled=false;b.textContent='Gerar PDF'}};
 $('#salvar').onclick=async()=>{if(!atual)return;
@@ -431,7 +624,424 @@ $('#novo').onclick=()=>{const b=$('#novo');if(!armado){armado=true;b.textContent
  clearTimeout(tm);armado=false;b.textContent='Nova ficha';
  $$('main input[type=text],main input[type=email],main input[type=tel],main textarea').forEach(i=>{if(i.id!=='cidade'&&i.id!=='clinica')i.value=''});
  $$('main input[type=checkbox],main input[type=radio]').forEach(i=>i.checked=false);$$('.q .more').forEach(m=>m.hidden=true);
- $('#imps').innerHTML='';impN=0;addImp();fotos=[];thumbs();Object.values(pads).forEach(p=>p.clear());$('#data').value=hoje();$('#a-err').textContent='';$('#t-err').textContent='';atual=null;show('anamnese')};
+ $('#imps').innerHTML='';impN=0;addImp();fotos=[];thumbs();Object.values(pads).forEach(p=>p.clear());$('#data').value=hoje();$('#a-err').textContent='';$('#t-err').textContent='';atual=null;show('anamnese');desvincular()};
+/* Ilustrações próprias dos procedimentos – Monólitos Digital */
+const ILL = (() => {
+const DEFS = `<defs>
+<linearGradient id="en" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#E6DED2"/><stop offset=".35" stop-color="#FFFFFF"/><stop offset=".7" stop-color="#F6F1EA"/><stop offset="1" stop-color="#D8CDBD"/></linearGradient>
+<linearGradient id="enY" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#D9C48E"/><stop offset=".4" stop-color="#F0E2B6"/><stop offset="1" stop-color="#D2BC86"/></linearGradient>
+<linearGradient id="root" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#E7D7BC"/><stop offset=".5" stop-color="#F7ECDA"/><stop offset="1" stop-color="#DCC8A6"/></linearGradient>
+<linearGradient id="gum" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F4B9B6"/><stop offset="1" stop-color="#E39492"/></linearGradient>
+<linearGradient id="bone" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F2E4CA"/><stop offset="1" stop-color="#E0C9A1"/></linearGradient>
+<linearGradient id="ti" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7F8A95"/><stop offset=".45" stop-color="#E4E8EC"/><stop offset=".6" stop-color="#C9D0D6"/><stop offset="1" stop-color="#76818C"/></linearGradient>
+<linearGradient id="cer" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".6" stop-color="#EEF3F6"/><stop offset="1" stop-color="#D3DEE6"/></linearGradient>
+<linearGradient id="res" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFDF7"/><stop offset="1" stop-color="#EBDDC4"/></linearGradient>
+<linearGradient id="acr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EFA0A2"/><stop offset="1" stop-color="#D47A80"/></linearGradient>
+<radialGradient id="bg" cx=".5" cy=".35" r=".75"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#F3EAE1"/></radialGradient>
+<marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#9A6A4C"/></marker>
+</defs>`;
+const BG = `<rect width="240" height="200" rx="20" fill="url(#bg)"/>`;
+const bone = (y = 118) => `<path d="M14 ${y}H226V188a10 10 0 0 1-10 10H24a10 10 0 0 1-10-10Z" fill="url(#bone)"/>` +
+  [[40,150],[70,172],[96,142],[150,176],[176,148],[204,170],[58,186],[188,186],[30,170],[210,140]].map(([x,yy])=>`<ellipse cx="${x}" cy="${yy+(y-118)}" rx="6" ry="3.5" fill="#D8BF94" opacity=".45"/>`).join('');
+const gum = (y = 106) => `<path d="M14 ${y+2}C50 ${y-8} 74 ${y+12} 120 ${y}C166 ${y-12} 190 ${y+10} 226 ${y}V${y+22}C190 ${y+32} 166 ${y+14} 120 ${y+24}C74 ${y+34} 50 ${y+16} 14 ${y+26}Z" fill="url(#gum)"/>`;
+const OUT = `stroke="#A8927A" stroke-width="1.6" stroke-linejoin="round"`;
+const molar = (dx = 0, dy = 0, fill = 'url(#en)') => `<g transform="translate(${dx} ${dy})"><path d="M104 108L100 160C99 172 110 174 112 162L120 124L128 162C130 174 141 172 140 160L136 108Z" fill="url(#root)" ${OUT}/><path d="M86 54C86 34 100 28 110 34C116 38 124 38 130 34C140 28 154 34 154 54L152 94C151 104 145 110 138 110H102C95 110 89 104 88 94Z" fill="${fill}" ${OUT}/><path d="M98 48C100 40 106 38 110 41" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" opacity=".9"/></g>`;
+const crownOnly = (dx = 0, dy = 0, fill = 'url(#en)', st = OUT, shine = true) => `<g transform="translate(${dx} ${dy})"><path d="M86 54C86 34 100 28 110 34C116 38 124 38 130 34C140 28 154 34 154 54L152 90C151 100 145 104 138 104H102C95 104 89 100 88 90Z" fill="${fill}" ${st}/>${shine ? '<path d="M98 48C100 40 106 38 110 41" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" opacity=".9"/>' : ''}</g>`;
+const screw = (cx = 120, top = 112, len = 62, w = 30) => {
+  let s = `<path d="M${cx-w/2} ${top}H${cx+w/2}L${cx+w/2-5} ${top+len}Q${cx} ${top+len+10} ${cx-w/2+5} ${top+len}Z" fill="url(#ti)" stroke="#6B7680" stroke-width="1.2"/>`;
+  for (let y = top + 8; y < top + len - 2; y += 8) { const k = (y - top) / len * 5; s += `<path d="M${cx-w/2+k-2} ${y}L${cx+w/2-k+2} ${y-5}" stroke="#5E6973" stroke-width="2" stroke-linecap="round" opacity=".75"/>`; }
+  return s;
+};
+const abut = (cx = 120, y = 96) => `<path d="M${cx-9} ${y}H${cx+9}L${cx+12} ${y+16}H${cx-12}Z" fill="url(#ti)" stroke="#6B7680" stroke-width="1.2"/>`;
+const spark = (x, y, s = 1, c = '#C9A24A') => `<path transform="translate(${x} ${y}) scale(${s})" d="M0 -9L2.2 -2.2L9 0L2.2 2.2L0 9L-2.2 2.2L-9 0L-2.2 -2.2Z" fill="${c}"/>`;
+const incisor = (cx, top, w = 40, fill = 'url(#en)', h = 70) => `<path d="M${cx-w/2} ${top+8}Q${cx} ${top-4} ${cx+w/2} ${top+8}L${cx+w/2+2} ${top+h-10}Q${cx+w/2} ${top+h} ${cx} ${top+h+2}Q${cx-w/2} ${top+h} ${cx-w/2-2} ${top+h-10}Z" fill="${fill}" ${OUT}/><path d="M${cx-w/2+8} ${top+14}Q${cx-w/2+10} ${top+40} ${cx-w/2+8} ${top+55}" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" opacity=".85"/>`;
+const wrap = inner => `<svg xmlns="http://www.w3.org/2000/svg" width="480" height="400" viewBox="0 0 240 200">${DEFS}${BG}${inner}</svg>`;
+const ART = {
+  implante: bone() + screw() + abut() + gum() + crownOnly(0, -2, 'none', 'stroke="#9A6A4C" stroke-width="1.8" stroke-dasharray="5 5"', false) + `<text x="120" y="72" text-anchor="middle" font-family="Arial" font-size="11" fill="#9A6A4C">coroa futura</text>` + spark(178, 150, .8, '#7FA6C0'),
+  coroa_implante: bone() + screw() + abut() + gum() + crownOnly(0, -6) + spark(176, 42, 1.1) + spark(66, 66, .7),
+  coroa_dente: bone() + `<path d="M104 108L100 160C99 172 110 174 112 162L120 124L128 162C130 174 141 172 140 160L136 108Z" fill="url(#root)" ${OUT}/><path d="M96 108L98 74Q100 66 108 64H132Q140 66 142 74L144 108Z" fill="#E8D6B4" ${OUT}/>` + gum() + crownOnly(0, -30, 'url(#cer)') + `<path d="M182 36V70" stroke="#9A6A4C" stroke-width="2.2" stroke-dasharray="4 4" marker-end="url(#ar)"/>`,
+  faceta_resina: incisor(96, 52, 52, 'url(#enY)', 104) + `<path d="M14 146Q60 138 96 146Q132 138 226 146V178a10 10 0 0 1-10 10H24a10 10 0 0 1-10-10Z" fill="url(#gum)"/>` + `<path d="M150 50Q172 42 194 50L196 140Q192 154 172 156Q152 154 148 140Z" fill="url(#res)" stroke="#B89A6E" stroke-width="1.6" opacity=".95"/><path d="M142 98H130" stroke="#9A6A4C" stroke-width="2.2" marker-end="url(#ar)"/>`,
+  faceta_ceramica: incisor(96, 52, 52, 'url(#enY)', 104) + `<path d="M14 146Q60 138 96 146Q132 138 226 146V178a10 10 0 0 1-10 10H24a10 10 0 0 1-10-10Z" fill="url(#gum)"/>` + `<path d="M152 50Q172 43 192 50L193 140Q190 153 172 155Q154 153 151 140Z" fill="url(#cer)" stroke="#9FB4C3" stroke-width="1.4" opacity=".92"/><path d="M160 60Q162 90 160 120" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M142 98H130" stroke="#9A6A4C" stroke-width="2.2" marker-end="url(#ar)"/>` + spark(204, 44, .9, '#7FA6C0'),
+  clareamento: incisor(62, 46, 40, 'url(#enY)', 96) + incisor(120, 42, 44, 'url(#en)', 100) + incisor(178, 46, 40, 'url(#en)', 96) + `<path d="M14 136Q62 128 91 136Q120 128 149 136Q178 128 226 136V160Q120 168 14 160Z" fill="url(#gum)"/>` + `<path d="M44 182H196" stroke="#E2D6C6" stroke-width="10" stroke-linecap="round"/><path d="M44 182H196" stroke="url(#enY)" stroke-width="10" stroke-linecap="round" opacity=".0"/>` + ['#D9C48E','#E6D4A2','#EFE3C2','#F6EFE0','#FFFFFF'].map((c,i)=>`<rect x="${52+i*28}" y="174" width="22" height="16" rx="4" fill="${c}" stroke="#C9B8A0"/>`).join('') + spark(206, 40, 1.1) + spark(150, 26, .7),
+  restauracao: bone() + gum() + molar() + `<path d="M108 40Q120 52 132 40Q134 56 120 60Q106 56 108 40Z" fill="url(#res)" stroke="#9A6A4C" stroke-width="1.6" stroke-dasharray="3 3"/><path d="M40 16L104 44" stroke="#7FA6E0" stroke-width="10" opacity=".35" stroke-linecap="round"/><rect x="18" y="6" width="34" height="14" rx="6" transform="rotate(24 35 13)" fill="#5D6B78"/>`,
+  canal: bone() + `<path d="M104 108L100 160C99 172 110 174 112 162L120 124L128 162C130 174 141 172 140 160L136 108Z" fill="url(#root)" ${OUT}/><path d="M86 54C86 34 100 28 110 34C116 38 124 38 130 34C140 28 154 34 154 54L152 94C151 104 145 110 138 110H102C95 110 89 104 88 94Z" fill="url(#en)" ${OUT}/><path d="M106 70Q120 62 134 70L132 96L130 108L127 160Q125 166 124 158L121 122H119L116 158Q115 166 113 160L110 108L108 96Z" fill="#E98A3A" stroke="#C0652A" stroke-width="1.2"/>` + gum() + `<path d="M120 4V66" stroke="#6B7680" stroke-width="3" stroke-linecap="round"/><rect x="112" y="2" width="16" height="16" rx="3" fill="#C9A24A"/>`,
+  extracao: bone() + `<path d="M98 112L96 162C95 176 112 178 114 166L120 132L126 166C128 178 145 176 144 162L142 112" fill="#C9A98A" opacity=".55" stroke="#A8927A" stroke-dasharray="4 4" stroke-width="1.4"/>` + gum() + `<g transform="rotate(-8 120 60)">${molar(0, -22)}</g><path d="M190 120V40" stroke="#9A6A4C" stroke-width="2.4" marker-end="url(#ar)"/>`,
+  limpeza: bone() + gum() + molar() + `<path d="M88 92C92 100 98 106 104 108L100 100C96 98 92 96 88 92Z" fill="#C6A55A"/><ellipse cx="94" cy="100" rx="7" ry="5" fill="#BE9B4E"/><ellipse cx="102" cy="106" rx="5" ry="3.5" fill="#BE9B4E"/><path d="M196 18L158 84" stroke="#6B7680" stroke-width="4" stroke-linecap="round"/><path d="M158 84Q152 92 146 90" stroke="#6B7680" stroke-width="3" fill="none" stroke-linecap="round"/>` + spark(168, 40, 1) + spark(150, 62, .6),
+  enxerto: `<path d="M14 118H226V188a10 10 0 0 1-10 10H24a10 10 0 0 1-10-10Z" fill="url(#bone)"/><path d="M84 118Q120 168 156 118Z" fill="#F7EEDC" stroke="#C9A98A" stroke-width="1.2"/>` + Array.from({length: 26}, (_, i) => { const a = (i * 137.5) % 360 * Math.PI / 180, r = 6 + (i % 7) * 4.2; return `<circle cx="${(120 + Math.cos(a) * r * 1.5).toFixed(1)}" cy="${(132 + Math.abs(Math.sin(a)) * r * .9).toFixed(1)}" r="${(2.6 + (i % 3)).toFixed(1)}" fill="#E9D3A8" stroke="#C3A06A" stroke-width=".8"/>`; }).join('') + `<path d="M76 116Q120 104 164 116" stroke="#8FB8A8" stroke-width="5" fill="none" stroke-linecap="round" opacity=".85"/>` + `<path d="M194 40Q176 70 156 104" stroke="#9A6A4C" stroke-width="2.2" fill="none" marker-end="url(#ar)" stroke-dasharray="4 4"/>`,
+  protocolo: bone(126) + [52, 96, 144, 188].map(x => screw(x, 120, 52, 22)).join('') + `<path d="M20 98Q120 84 220 98V124Q120 112 20 124Z" fill="url(#acr)" stroke="#C06A70" stroke-width="1.2"/>` + [38, 66, 94, 122, 150, 178, 204].map((x, i) => `<path d="M${x-12} 98L${x-12} 70Q${x-12} 56 ${x} 56Q${x+12} 56 ${x+12} 70L${x+12} 98Z" fill="url(#en)" ${OUT}/>`).join(''),
+  generico: bone() + gum() + molar(),
+};
+const cache = {};
+return {
+  keys: Object.keys(ART),
+  svg: k => wrap(ART[k] || ART.generico),
+  url: k => cache[k] || (cache[k] = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(wrap(ART[k] || ART.generico)))
+};
+})();
+
+/* ======================= v2: agenda, pacientes, orçamentos ======================= */
+const ILLIMG={};const illOK=Promise.all(ILL.keys.map(k=>new Promise(r=>{const i=new Image();i.onload=r;i.onerror=r;i.src=ILL.url(k);ILLIMG[k]=i})));
+const ILLN={implante:'Implante',coroa_implante:'Coroa sobre implante',coroa_dente:'Coroa sobre dente',faceta_resina:'Faceta em resina',faceta_ceramica:'Faceta em cerâmica',clareamento:'Clareamento',restauracao:'Restauração',canal:'Canal',extracao:'Extração',limpeza:'Limpeza',enxerto:'Enxerto',protocolo:'Protocolo',generico:'Dente (genérico)'};
+const CAT0=[
+ ['Avaliação e planejamento','generico',150,'Exame clínico completo, análise de exames e planejamento do seu tratamento.'],
+ ['Limpeza (profilaxia e raspagem)','limpeza',250,'Remoção do tártaro e da placa bacteriana, com polimento. Previne cárie, gengivite e mau hálito.'],
+ ['Restauração em resina','restauracao',250,'O dente cariado ou fraturado é limpo e reconstruído com resina da cor do dente.'],
+ ['Tratamento de canal','canal',900,'Limpeza e selamento do canal do dente para eliminar a infecção e salvar o dente natural.'],
+ ['Extração','extracao',300,'Remoção do dente comprometido, com anestesia e orientações de cuidado após o procedimento.'],
+ ['Enxerto ósseo','enxerto',1500,'Reconstrução do osso que se perdeu, para dar base firme e segura ao implante.'],
+ ['Implante dentário','implante',2500,'Um pino de titânio é instalado no osso e funciona como a raiz do dente perdido.'],
+ ['Coroa sobre implante','coroa_implante',2000,'O dente definitivo, fixado sobre o implante, devolve a mastigação e o sorriso.'],
+ ['Protocolo sobre implantes','protocolo',18000,'Arcada completa fixa, parafusada sobre implantes. Sem dentadura solta.'],
+ ['Coroa em cerâmica (sobre dente)','coroa_dente',1800,'O dente é preparado e recebe uma coroa de cerâmica que devolve forma, cor e resistência.'],
+ ['Faceta em resina','faceta_resina',600,'Camada de resina aplicada na frente do dente para corrigir cor, forma e pequenos defeitos.'],
+ ['Lente / faceta em cerâmica','faceta_ceramica',1800,'Lâmina fina de cerâmica colada na frente do dente. Resultado natural e duradouro.'],
+ ['Clareamento dental','clareamento',900,'Clareamento supervisionado para deixar os dentes mais brancos com segurança.'],
+ ['Manutenção de implantes','limpeza',300,'Revisão periódica com limpeza profissional e avaliação. Essencial para a vida longa dos implantes.']];
+const CFG0={id:'cfg',clinicas:[],dur:60,retorno:6,
+ msgConf:'Olá, {nome}! Aqui é do consultório do '+PROF+'. Passando para confirmar sua consulta {dia} às {hora}{clinica}. Podemos confirmar?',
+ msgRet:'Olá, {nome}! Aqui é do consultório do '+PROF+'. Já está na hora da sua manutenção periódica. Vamos agendar um horário?',
+ cat:CAT0.map(([nome,ill,valor,desc],i)=>({cod:'p'+i,nome,ill,valor,desc})),lastBk:0};
+const DB=(()=>{let db;const ST=['pac','con','orc','doc','nota','kv'];
+ const open=()=>new Promise((res,rej)=>{const r=indexedDB.open('odonto-'+CONFIG.cro.replace(/\W/g,''),1);r.onupgradeneeded=()=>ST.forEach(s=>{if(!r.result.objectStoreNames.contains(s))r.result.createObjectStore(s,{keyPath:'id'})});r.onsuccess=()=>{db=r.result;res()};r.onerror=()=>rej(r.error)});
+ const tx=(s,m,f)=>new Promise((res,rej)=>{const t=db.transaction(s,m);const q=f(t.objectStore(s));t.oncomplete=()=>res(q&&q.result);t.onerror=()=>rej(t.error);t.onabort=()=>rej(t.error)});
+ return{open,ST,all:s=>tx(s,'readonly',o=>o.getAll()),put:(s,v)=>tx(s,'readwrite',o=>o.put(v)),del:(s,id)=>tx(s,'readwrite',o=>o.delete(id)),clear:s=>tx(s,'readwrite',o=>o.clear()),get ok(){return!!db}}})();
+const D={pac:[],con:[],orc:[],doc:[],nota:[]};let CFG=JSON.parse(JSON.stringify(CFG0));
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+async function save(s,o){o.atualizado=Date.now();const a=D[s]||[];const i=a.findIndex(x=>x.id===o.id);if(i<0)a.push(o);else a[i]=o;if(DB.ok)await DB.put(s,o)}
+async function rm(s,id){D[s]=D[s].filter(x=>x.id!==id);if(DB.ok)await DB.del(s,id)}
+let cfgT=null;const saveCfg=()=>{clearTimeout(cfgT);cfgT=setTimeout(()=>{if(DB.ok)DB.put('kv',CFG)},300)};
+async function carregar(){for(const s of ['pac','con','orc','doc','nota'])D[s]=await DB.all(s);const kv=await DB.all('kv');const c=kv.find(x=>x.id==='cfg');if(c)CFG=Object.assign(JSON.parse(JSON.stringify(CFG0)),c)}
+
+/* utilidades */
+const p2=n=>String(n).padStart(2,'0');
+const isoD=d=>d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate());
+const toD=s=>{const[y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)};
+const addD=(s,n)=>{const d=toD(s);d.setDate(d.getDate()+n);return isoD(d)};
+const addM=(s,n)=>{const d=toD(s);d.setMonth(d.getMonth()+n);return isoD(d)};
+const DOW=['domingo','segunda','terça','quarta','quinta','sexta','sábado'];
+const brD=s=>{if(!s)return'';const[y,m,d]=s.split('-');return d+'/'+m+'/'+y};
+const longD=s=>{const d=toD(s);return DOW[d.getDay()]+', '+d.getDate()+' de '+MESES[d.getMonth()]};
+const semIni=s=>{const d=toD(s);d.setDate(d.getDate()-(d.getDay()+6)%7);return isoD(d)};
+const money=n=>(+n||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const num=s=>{s=String(s??'').trim().replace(/[R$\s]/g,'');if(s.includes(','))s=s.replace(/\./g,'').replace(',','.');const n=parseFloat(s);return isFinite(n)?n:0};
+const numTxt=n=>(+n||0)%1?String((+n).toFixed(2)).replace('.',','):String(+n||0);
+const idadeDe=n=>{if(!n)return'';const b=toD(n),t=new Date();let a=t.getFullYear()-b.getFullYear();if(t.getMonth()<b.getMonth()||(t.getMonth()===b.getMonth()&&t.getDate()<b.getDate()))a--;return a>=0&&a<130?String(a):''};
+const dig=s=>String(s||'').replace(/\D/g,'');
+const norm=s=>String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/\s+/g,' ').trim();
+const waURL=(tel,txt)=>{let d=dig(tel);if(d.length===10||d.length===11)d='55'+d;return d.length>=12?'https://wa.me/'+d+'?text='+encodeURIComponent(txt):''};
+const fillT=(t,o)=>String(t||'').replace(/\{(\w+)\}/g,(_,k)=>o[k]??'');
+const pacById=id=>D.pac.find(p=>p.id===id);
+const pacByNome=n=>{const k=norm(n);return k?D.pac.find(p=>norm(p.nome)===k):null};
+const ini=n=>String(n||'?').trim().split(/\s+/).filter(Boolean).map((w,i,a)=>i===0||i===a.length-1?w[0]:'').join('').toUpperCase().slice(0,2);
+const HOJE=()=>isoD(new Date());
+const WAI='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="'+ICONS[0][2]+'"/></svg>';
+function toast(t){const d=document.createElement('div');d.className='toast';d.setAttribute('role','status');d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),2600)}
+function dls(){$('#dl-pac').innerHTML=D.pac.map(p=>`<option value="${esc(p.nome)}">`).join('');
+ $('#dl-cli').innerHTML=[...new Set(CFG.clinicas.concat(D.con.map(c=>c.clinica)).filter(Boolean))].map(c=>`<option value="${esc(c)}">`).join('');
+ $('#dl-proc').innerHTML=CFG.cat.map(c=>`<option value="${esc(c.nome)}">`).join('')}
+
+/* janelas */
+const md=$('#md'),mds=$('#md-s');let mdClose=null,mdFoco=null;
+function modal(html,onClose){mdFoco=document.activeElement;mds.innerHTML=html;md.classList.add('on');mdClose=onClose||null;md.scrollTop=0;const f=mds.querySelector('[autofocus]')||mds.querySelector('h2');if(f){if(f.tagName==='H2')f.tabIndex=-1;f.focus()}return mds}
+function fecharMd(){if(!md.classList.contains('on'))return;md.classList.remove('on');mds.innerHTML='';const c=mdClose;mdClose=null;if(mdFoco&&mdFoco.focus)try{mdFoco.focus()}catch(_){}c&&c()}
+md.addEventListener('click',e=>{if(e.target===md)fecharMd()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&md.classList.contains('on'))fecharMd()});
+function ask(t,ok,det){return new Promise(r=>{modal(`<h2>${esc(t)}</h2>${det?`<p class="note">${esc(det)}</p>`:''}<div class="acts" style="margin-top:16px"><button type="button" class="btn pri" data-a="1">${esc(ok||'Confirmar')}</button><button type="button" class="btn" data-a="0">Cancelar</button></div>`,()=>r(false));
+ mds.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{mdClose=null;const s=b.dataset.a==='1';fecharMd();r(s)})})}
+const mv=id=>((mds.querySelector('#'+id)||{}).value||'').trim();
+
+/* navegação */
+let PG='agenda';const RN={};
+function go(pg,arg){PG=pg;$$('.pg').forEach(s=>s.hidden=s.id!=='pg-'+pg);$('#pg-fichas').hidden=pg!=='fichas';
+ const topo={paciente:'pacientes',orc:'orcs'}[pg]||pg;$$('.nav button').forEach(b=>{if(b.dataset.pg===topo)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
+ if(RN[pg])RN[pg](arg);if(pg==='fichas')requestAnimationFrame(fitAll);window.scrollTo(0,0)}
+$$('.nav button').forEach(b=>b.onclick=()=>go(b.dataset.pg));
+document.addEventListener('click',e=>{const b=e.target.closest('[data-back]');if(b)go(b.dataset.back)});
+
+/* ---------- pacientes ---------- */
+function ultimaVisita(pid){let u='';D.con.forEach(c=>{if(c.pid===pid&&c.status==='atendido'&&c.data>u)u=c.data});
+ D.orc.forEach(o=>{if(o.pid===pid)o.itens.forEach(i=>{if(i.feito&&i.feito>u)u=i.feito})});D.nota.forEach(n=>{if(n.pid===pid&&n.data>u)u=n.data});return u}
+RN.pacientes=()=>{const q=norm($('#pc-busca').value),qd=dig($('#pc-busca').value);
+ const l=D.pac.filter(p=>!q||norm(p.nome).includes(q)||(qd.length>2&&(dig(p.tel).includes(qd)||dig(p.cpf).includes(qd)))).sort((a,b)=>norm(a.nome).localeCompare(norm(b.nome)));
+ $('#pc-list').innerHTML=l.length?l.map(p=>{const u=ultimaVisita(p.id);return`<button type="button" class="it" data-p="${p.id}"><span class="av" aria-hidden="true">${esc(ini(p.nome))}</span><span class="m"><b>${esc(p.nome)}</b><small>${esc([p.tel,u?'última visita '+brD(u):'sem visitas registradas'].filter(Boolean).join(' · '))}</small></span></button>`}).join('')
+ :`<div class="empty">${D.pac.length?'Nenhum paciente encontrado.':'Nenhum paciente cadastrado ainda. Eles também entram automaticamente quando você gera uma ficha de anamnese.'}</div>`;
+ $$('#pc-list [data-p]').forEach(b=>b.onclick=()=>go('paciente',b.dataset.p))};
+$('#pc-busca').oninput=()=>RN.pacientes();
+$('#pc-novo').onclick=()=>editPac(null,p=>go('paciente',p.id));
+function editPac(id,depois,pre){const p=id?{...pacById(id)}:{id:uid(),nome:'',tel:'',nasc:'',cpf:'',email:'',end:'',alerta:'',criado:Date.now(),...(pre||{})};
+ modal(`<h2>${id?'Editar paciente':'Novo paciente'}</h2><div class="grid">
+ <label class="f c6">Nome completo<input type="text" id="p-nome" value="${esc(p.nome)}" autocomplete="off" autofocus></label>
+ <label class="f c3">Telefone / WhatsApp<input type="tel" id="p-tel" value="${esc(p.tel)}" autocomplete="off"></label>
+ <label class="f c3">Data de nascimento<input type="date" id="p-nasc" value="${esc(p.nasc)}"></label>
+ <label class="f c3">CPF<input type="text" id="p-cpf" inputmode="numeric" value="${esc(p.cpf)}" autocomplete="off"></label>
+ <label class="f c3">E-mail<input type="email" id="p-email" value="${esc(p.email)}" autocomplete="off"></label>
+ <label class="f c6">Endereço<input type="text" id="p-end" value="${esc(p.end)}" autocomplete="off"></label>
+ <label class="f c6">Alerta clínico (alergias, medicamentos, cuidados)<input type="text" id="p-al" value="${esc(p.alerta)}" autocomplete="off"></label></div>
+ <p class="err" id="p-err" role="alert"></p>
+ <div class="acts" style="margin-top:14px"><button type="button" class="btn pri" id="p-ok">Salvar</button><button type="button" class="btn" id="p-x">Cancelar</button>${id?'<button type="button" class="btn" id="p-del">Excluir</button>':''}</div>`);
+ $('#p-x').onclick=fecharMd;
+ $('#p-ok').onclick=async()=>{const nome=mv('p-nome');if(!nome){$('#p-err').textContent='Informe o nome do paciente.';return}
+  const dup=D.pac.find(x=>x.id!==p.id&&norm(x.nome)===norm(nome));if(dup&&!$('#p-ok').dataset.ok){$('#p-ok').dataset.ok=1;$('#p-err').textContent='Já existe um paciente com esse nome. Toque em Salvar de novo para cadastrar assim mesmo.';return}
+  Object.assign(p,{nome,tel:mv('p-tel'),nasc:mv('p-nasc'),cpf:mv('p-cpf'),email:mv('p-email'),end:mv('p-end'),alerta:mv('p-al')});await save('pac',p);dls();mdClose=null;fecharMd();toast('Paciente salvo');depois&&depois(p)};
+ if(id)$('#p-del').onclick=async()=>{const n=D.con.filter(c=>c.pid===id).length+D.orc.filter(o=>o.pid===id).length+D.doc.filter(d=>d.pid===id).length;
+  if(!await ask('Excluir '+p.nome+'?','Excluir paciente',n?'Também serão apagados '+n+' registro(s) do histórico (consultas, orçamentos e documentos). Isso não pode ser desfeito.':'Isso não pode ser desfeito.'))return;
+  for(const s of ['con','orc','doc','nota'])for(const x of D[s].filter(x=>x.pid===id))await rm(s,x.id);await rm('pac',id);dls();toast('Paciente excluído');go('pacientes')}}
+let ppId=null;
+RN.paciente=id=>{if(id)ppId=id;const p=pacById(ppId);if(!p){go('pacientes');return}const hj=HOJE();
+ const fut=D.con.filter(c=>c.pid===p.id&&c.data>=hj&&!['cancelado','atendido','faltou'].includes(c.status)).sort((a,b)=>(a.data+a.hora).localeCompare(b.data+b.hora));
+ const ev=[];
+ D.con.filter(c=>c.pid===p.id&&!fut.includes(c)).forEach(c=>ev.push({k:c.data+c.hora,d:brD(c.data)+' · '+c.hora,t:'Consulta – '+STL[c.status].toLowerCase(),s:[c.proc,c.clinica].filter(Boolean).join(' · '),a:'con:'+c.id}));
+ D.orc.filter(o=>o.pid===p.id).forEach(o=>{ev.push({k:o.data+'00',d:brD(o.data),t:'Orçamento '+ORL[o.status].toLowerCase(),s:o.itens.length+' procedimento(s) · '+money(totOrc(o).total),a:'orc:'+o.id});
+  o.itens.filter(i=>i.feito).forEach(i=>ev.push({k:i.feito+'99',d:brD(i.feito),t:i.nome,s:['Realizado',i.dente&&'dente '+i.dente].filter(Boolean).join(' · '),a:'orc:'+o.id}))});
+ D.doc.filter(d=>d.pid===p.id).forEach(d=>ev.push({k:d.data+'50',d:brD(d.data),t:d.titulo,s:'Documento em PDF',a:'doc:'+d.id}));
+ D.nota.filter(n=>n.pid===p.id).forEach(n=>ev.push({k:n.data+'98',d:brD(n.data),t:'Anotação clínica',s:n.txt,a:'nota:'+n.id}));
+ ev.sort((a,b)=>b.k.localeCompare(a.k));const id_=idadeDe(p.nasc);
+ const wl=waURL(p.tel,'Olá, '+p.nome.split(' ')[0]+'! ');
+ $('#pp').innerHTML=`<h1>${esc(p.nome)}</h1><p class="lead">${[id_&&id_+' anos',p.tel,p.cpf&&'CPF '+p.cpf].filter(Boolean).map(x=>`<span>${esc(x)}</span>`).join('')}</p>${p.alerta?`<div class="al">Atenção: ${esc(p.alerta)}</div>`:''}
+ <div class="acg"><button type="button" class="btn sm pri" data-x="ag">Agendar</button><button type="button" class="btn sm" data-x="or">Orçamento</button><button type="button" class="btn sm" data-x="fi">Ficha</button>
+ ${wl?`<a class="btn sm" href="${wl}" target="_blank" rel="noopener">WhatsApp</a>`:'<button type="button" class="btn sm" disabled>WhatsApp</button>'}<button type="button" class="btn sm" data-x="no">Anotação</button><button type="button" class="btn sm" data-x="ed">Editar</button></div>
+ ${fut.length?`<h2 class="pt">Próximas consultas</h2><ul class="tl">${fut.map(c=>`<li class="fut"><button type="button" data-a="con:${c.id}"><span class="d">${esc(longD(c.data))} · ${c.hora}</span><b>${esc(c.proc||'Consulta')}</b><small>${esc([c.clinica,STL[c.status]].filter(Boolean).join(' · '))}</small></button></li>`).join('')}</ul>`:''}
+ <h2 class="pt">Histórico</h2>${ev.length?`<ul class="tl">${ev.map(e=>`<li><button type="button" data-a="${e.a}"><span class="d">${esc(e.d)}</span><b>${esc(e.t)}</b><small>${esc(e.s)}</small></button></li>`).join('')}</ul>`:'<div class="empty">Ainda não há registros para este paciente.</div>'}`;
+ const X={ag:()=>openCon(null,{pid:p.id}),or:()=>novoOrc(p.id),fi:()=>{go('fichas');vincular(p)},no:()=>editNota(null,p.id),ed:()=>editPac(p.id,()=>RN.paciente())};
+ $$('#pp [data-x]').forEach(b=>b.onclick=X[b.dataset.x]);
+ $$('#pp [data-a]').forEach(b=>b.onclick=()=>{const[t,i]=b.dataset.a.split(':');if(t==='con')openCon(i);else if(t==='orc')go('orc',i);else if(t==='doc')abrirDoc(i);else editNota(i)})};
+function editNota(id,pid){const n=id?{...D.nota.find(x=>x.id===id)}:{id:uid(),pid,data:HOJE(),txt:''};
+ modal(`<h2>${id?'Anotação':'Nova anotação'}</h2><div class="grid"><label class="f c3">Data<input type="date" id="n-data" value="${n.data}"></label><label class="f c6">Procedimento realizado ou observação<textarea id="n-txt" autofocus>${esc(n.txt)}</textarea></label></div>
+ <div class="acts" style="margin-top:14px"><button type="button" class="btn pri" id="n-ok">Salvar</button><button type="button" class="btn" id="n-x">Cancelar</button>${id?'<button type="button" class="btn" id="n-del">Excluir</button>':''}</div>`);
+ $('#n-x').onclick=fecharMd;$('#n-ok').onclick=async()=>{n.txt=mv('n-txt');n.data=mv('n-data')||HOJE();if(!n.txt)return;await save('nota',n);fecharMd();RN.paciente()};
+ if(id)$('#n-del').onclick=async()=>{await rm('nota',id);fecharMd();RN.paciente()}}
+
+/* ---------- agenda ---------- */
+const STL={agendado:'Agendado',confirmado:'Confirmado',atendido:'Atendido',faltou:'Faltou',cancelado:'Cancelado'};
+let agDia=HOJE(),agModo='dia';
+function conMsg(c){const p=pacById(c.pid);if(!p)return'';const hj=HOJE();const dia=c.data===hj?'hoje':c.data===addD(hj,1)?'amanhã':'de '+longD(c.data);
+ return waURL(p.tel,fillT(CFG.msgConf,{nome:p.nome.split(' ')[0],dia,hora:c.hora,clinica:c.clinica?' na '+c.clinica:''}))}
+function retornos(){const hj=HOJE(),lim=addM(hj,-CFG.retorno);return D.pac.map(p=>({p,u:ultimaVisita(p.id)})).filter(({p,u})=>u&&u<=lim&&!(p.adiar&&p.adiar>hj)&&!D.con.some(c=>c.pid===p.id&&c.data>=hj&&c.status!=='cancelado'))}
+RN.agenda=()=>{const hj=HOJE();$$('#ag-modo button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.m===agModo)));
+ const dias=agModo==='dia'?[agDia]:Array.from({length:7},(_,i)=>addD(semIni(agDia),i));
+ const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);$('#ag-tit').textContent=agModo==='dia'?(agDia===hj?'Hoje, ':'')+(agDia===hj?longD(agDia):cap(longD(agDia))):'Semana de '+brD(dias[0]).slice(0,5)+' a '+brD(dias[6]).slice(0,5);
+ const card=c=>{const w=conMsg(c);return`<div class="it ${c.status}" role="button" tabindex="0" data-c="${c.id}"><span class="h">${c.hora}</span><span class="m"><b>${esc(pacById(c.pid)?pacById(c.pid).nome:'Paciente removido')}</b><small>${esc([c.proc,c.clinica,c.dur+' min'].filter(Boolean).join(' · '))}</small><span class="chip ${c.status}" style="margin-top:4px">${STL[c.status]}</span></span>${w&&!['atendido','cancelado','faltou'].includes(c.status)?`<a class="wa" href="${w}" target="_blank" rel="noopener" aria-label="Confirmar pelo WhatsApp">${WAI}</a>`:''}</div>`};
+ $('#ag-list').innerHTML=dias.map(d=>{const l=D.con.filter(c=>c.data===d).sort((a,b)=>a.hora.localeCompare(b.hora));const at=l.filter(c=>c.status!=='cancelado').length;
+  return(agModo==='sem'?`<div class="dayh${d===hj?' hj':''}">${esc(d===hj?'Hoje, '+longD(d):longD(d).replace(/^./,x=>x.toUpperCase()))}<small>${at?at+' paciente'+(at>1?'s':''):'livre'}</small></div>`:'')+(l.length?`<div class="list">${l.map(card).join('')}</div>`:agModo==='dia'?`<div class="empty">Nenhum horário marcado neste dia.</div>`:'')}).join('');
+ $$('#ag-list [data-c]').forEach(el=>{el.onclick=e=>{if(!e.target.closest('a'))openCon(el.dataset.c)};el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openCon(el.dataset.c)}}});
+ const r=retornos();let h='';
+ if(r.length)h+=`<details class="card alerta"><summary>${r.length} paciente${r.length>1?'s':''} para lembrar da manutenção</summary>${r.map(({p,u})=>{const w=waURL(p.tel,fillT(CFG.msgRet,{nome:p.nome.split(' ')[0]}));return`<div class="mini"><span class="m"><b>${esc(p.nome)}</b><small>última visita ${brD(u)}</small></span>${w?`<a class="wa" href="${w}" target="_blank" rel="noopener" aria-label="Enviar lembrete pelo WhatsApp">${WAI}</a>`:''}<button type="button" class="btn sm" data-ra="${p.id}">Agendar</button><button type="button" class="btn sm" data-rd="${p.id}">Adiar 30 dias</button></div>`}).join('')}</details>`;
+ if(D.pac.length&&(!CFG.lastBk||Date.now()-CFG.lastBk>7*864e5))h+=`<div class="card mini" style="border-top:1px solid var(--line)"><span class="m"><b>Faça uma cópia de segurança</b><small>${CFG.lastBk?'Última cópia em '+new Date(CFG.lastBk).toLocaleDateString('pt-BR'):'Nenhuma cópia feita ainda'}. Os dados ficam só neste aparelho.</small></span><button type="button" class="btn sm" data-bk>Fazer agora</button></div>`;
+ $('#ag-alert').innerHTML=h;
+ $$('#ag-alert [data-ra]').forEach(b=>b.onclick=()=>openCon(null,{pid:b.dataset.ra,proc:'Manutenção'}));
+ $$('#ag-alert [data-rd]').forEach(b=>b.onclick=async()=>{const p=pacById(b.dataset.rd);p.adiar=addD(HOJE(),30);await save('pac',p);RN.agenda()});
+ const bk=$('#ag-alert [data-bk]');if(bk)bk.onclick=backup};
+$('#ag-prev').onclick=()=>{agDia=addD(agDia,agModo==='dia'?-1:-7);RN.agenda()};
+$('#ag-next').onclick=()=>{agDia=addD(agDia,agModo==='dia'?1:7);RN.agenda()};
+$('#ag-hoje').onclick=()=>{agDia=HOJE();RN.agenda()};
+$$('#ag-modo button').forEach(b=>b.onclick=()=>{agModo=b.dataset.m;RN.agenda()});
+$('#ag-novo').onclick=()=>openCon(null);
+function openCon(id,pre){const ex=id&&D.con.find(x=>x.id===id);if(id&&!ex)return;
+ const c=ex?{...ex}:{id:uid(),pid:'',data:agDia<HOJE()?HOJE():agDia,hora:'08:00',dur:CFG.dur,clinica:CFG.clinicas[0]||'',status:'agendado',proc:'',obs:'',...(pre||{})};
+ const p=pacById(c.pid);const durs=[15,20,30,40,45,60,75,90,120,150,180,240];if(!durs.includes(+c.dur))durs.push(+c.dur);
+ modal(`<h2>${ex?'Consulta':'Novo agendamento'}</h2><div class="grid">
+ <label class="f c6">Paciente<input type="text" id="c-pac" list="dl-pac" value="${esc(p?p.nome:'')}" autocomplete="off" placeholder="Digite o nome" ${ex?'':'autofocus'}></label>
+ <label class="f c6" id="c-telw" hidden>Telefone (paciente novo)<input type="tel" id="c-tel" autocomplete="off"></label>
+ <label class="f c2">Data<input type="date" id="c-data" value="${c.data}"></label>
+ <label class="f c2">Hora<input type="time" id="c-hora" value="${c.hora}" step="300"></label>
+ <label class="f c2">Duração<select id="c-dur">${durs.sort((a,b)=>a-b).map(d=>`<option value="${d}"${d==c.dur?' selected':''}>${d<60?d+' min':Math.floor(d/60)+'h'+(d%60?p2(d%60):'')}</option>`).join('')}</select></label>
+ <label class="f c3">Clínica<input type="text" id="c-cli" list="dl-cli" value="${esc(c.clinica)}" autocomplete="off"></label>
+ <label class="f c3">Procedimento<input type="text" id="c-proc" list="dl-proc" value="${esc(c.proc)}" autocomplete="off"></label>
+ <label class="f c6">Observações<input type="text" id="c-obs" value="${esc(c.obs)}" autocomplete="off"></label></div>
+ ${ex?`<p class="note" style="margin-top:14px">Situação</p><div class="seg" id="c-st" role="group" aria-label="Situação" style="flex-wrap:wrap">${Object.keys(STL).map(s=>`<button type="button" data-s="${s}" aria-pressed="${s===c.status}">${STL[s]}</button>`).join('')}</div>`:''}
+ <p class="err" id="c-err" role="alert"></p>
+ <div class="acts" style="margin-top:14px"><button type="button" class="btn pri" id="c-ok">Salvar</button>${ex&&conMsg(c)?`<a class="btn" href="${conMsg(c)}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;text-decoration:none">Confirmar no WhatsApp</a>`:''}${ex&&p?'<button type="button" class="btn" id="c-pp">Ver paciente</button>':''}${ex?'<button type="button" class="btn" id="c-del">Excluir</button>':'<button type="button" class="btn" id="c-x">Cancelar</button>'}</div>`);
+ const telw=()=>{const n=mv('c-pac');$('#c-telw').hidden=!n||!!pacByNome(n)};$('#c-pac').oninput=telw;telw();
+ if(ex)$$('#c-st button').forEach(b=>b.onclick=()=>{c.status=b.dataset.s;$$('#c-st button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)))});
+ if($('#c-x'))$('#c-x').onclick=fecharMd;if($('#c-pp'))$('#c-pp').onclick=()=>{fecharMd();go('paciente',c.pid)};
+ if(ex)$('#c-del').onclick=async()=>{if(!await ask('Excluir este agendamento?','Excluir'))return;await rm('con',c.id);RN[PG]&&RN[PG]()};
+ $('#c-ok').onclick=async()=>{const nome=mv('c-pac');Object.assign(c,{data:mv('c-data'),hora:mv('c-hora'),dur:+mv('c-dur')||CFG.dur,clinica:mv('c-cli'),proc:mv('c-proc'),obs:mv('c-obs')});
+  const er=[];if(!nome)er.push('o paciente');if(!c.data)er.push('a data');if(!c.hora)er.push('a hora');if(er.length){$('#c-err').textContent='Falta informar '+er.join(', ')+'.';return}
+  const ini_=t=>{const[h,m]=t.split(':').map(Number);return h*60+m};const a0=ini_(c.hora),a1=a0+c.dur;
+  const cf=D.con.find(x=>x.id!==c.id&&x.data===c.data&&x.status!=='cancelado'&&ini_(x.hora)<a1&&ini_(x.hora)+(+x.dur||0)>a0);
+  if(cf&&$('#c-ok').dataset.ok!==c.data+c.hora){$('#c-ok').dataset.ok=c.data+c.hora;$('#c-err').textContent='Esse horário coincide com '+pnome(cf.pid)+' às '+cf.hora+'. Toque em Salvar de novo para manter assim mesmo.';return}
+  let pp=pacByNome(nome);if(!pp){pp={id:uid(),nome,tel:mv('c-tel'),criado:Date.now()};await save('pac',pp);dls()}c.pid=pp.id;
+  await save('con',c);dls();mdClose=null;fecharMd();toast(ex?'Consulta atualizada':'Consulta agendada');if(PG==='agenda'){agDia=agModo==='dia'?c.data:agDia;}RN[PG]&&RN[PG]()}}
+const pnome=id=>(pacById(id)||{}).nome||'outro paciente';
+
+/* ---------- orçamentos ---------- */
+const ORL={aberto:'Em aberto',aprovado:'Aprovado',perdido:'Não fechou'};
+function totOrc(o){const sub=o.itens.reduce((a,i)=>a+num(i.valor)*(+i.qtd||1),0);const d=o.descTipo==='%'?sub*Math.min(100,num(o.desc))/100:Math.min(sub,num(o.desc));return{sub,desc:d,total:Math.max(0,sub-d)}}
+let orFilt='aberto';
+RN.orcs=()=>{$$('#or-filt button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.f===orFilt)));const hj=HOJE(),mes=hj.slice(0,7),d90=addD(hj,-90);
+ const ab=D.orc.filter(o=>o.status==='aberto'),apM=D.orc.filter(o=>o.status==='aprovado'&&(o.dtAprov||o.data).slice(0,7)===mes);
+ const rec=D.orc.filter(o=>o.status!=='aberto'&&o.data>=d90),conv=rec.length?Math.round(100*rec.filter(o=>o.status==='aprovado').length/rec.length)+'%':'–';
+ $('#or-kpi').innerHTML=`<div class="kpi"><small>Em aberto (${ab.length})</small><b>${money(ab.reduce((a,o)=>a+totOrc(o).total,0))}</b></div><div class="kpi"><small>Aprovados no mês</small><b>${money(apM.reduce((a,o)=>a+totOrc(o).total,0))}</b></div><div class="kpi"><small>Fechamento (90 dias)</small><b>${conv}</b></div>`;
+ const l=D.orc.filter(o=>!orFilt||o.status===orFilt).sort((a,b)=>(b.data+b.atualizado).localeCompare(a.data+a.atualizado));
+ $('#or-list').innerHTML=l.length?l.map(o=>{const t=totOrc(o);const venc=o.status==='aberto'&&addD(o.data,+o.validade||15)<hj;return`<button type="button" class="it" data-o="${o.id}"><span class="m"><b>${esc(pnome(o.pid))}</b><small>${brD(o.data)} · ${o.itens.length} procedimento${o.itens.length===1?'':'s'}${venc?' · validade vencida':''}${o.status==='perdido'&&o.motivo?' · '+esc(o.motivo):''}</small><span class="chip ${o.status}" style="margin-top:4px">${ORL[o.status]}</span></span><span class="v">${money(t.total)}</span></button>`}).join(''):`<div class="empty">${D.orc.length?'Nenhum orçamento nesta situação.':'Nenhum orçamento ainda. Toque em “+ Novo orçamento” para montar o primeiro.'}</div>`;
+ $$('#or-list [data-o]').forEach(b=>b.onclick=()=>go('orc',b.dataset.o))};
+$$('#or-filt button').forEach(b=>b.onclick=()=>{orFilt=b.dataset.f;RN.orcs()});
+$('#or-novo').onclick=()=>novoOrc(null);
+function novoOrc(pid){if(pid){criaOrc(pid);return}
+ modal(`<h2>Novo orçamento</h2><div class="grid"><label class="f c6">Paciente<input type="text" id="o-pac" list="dl-pac" autocomplete="off" placeholder="Digite o nome" autofocus></label><label class="f c6" id="o-telw" hidden>Telefone (paciente novo)<input type="tel" id="o-tel" autocomplete="off"></label></div><p class="err" id="o-err" role="alert"></p>
+ <div class="acts" style="margin-top:14px"><button type="button" class="btn pri" id="o-ok">Continuar</button><button type="button" class="btn" id="o-x">Cancelar</button></div>`);
+ $('#o-pac').oninput=()=>{const n=mv('o-pac');$('#o-telw').hidden=!n||!!pacByNome(n)};$('#o-x').onclick=fecharMd;
+ $('#o-ok').onclick=async()=>{const n=mv('o-pac');if(!n){$('#o-err').textContent='Informe o paciente.';return}let p=pacByNome(n);if(!p){p={id:uid(),nome:n,tel:mv('o-tel'),criado:Date.now()};await save('pac',p);dls()}mdClose=null;fecharMd();criaOrc(p.id)}}
+async function criaOrc(pid){const o={id:uid(),pid,data:HOJE(),status:'aberto',motivo:'',etapas:['Etapa 1'],itens:[],desc:0,descTipo:'R$',pgto:'',validade:15,obs:'',assin:null};await save('orc',o);go('orc',o.id)}
+let OE=null;const padO=Pad($('#po'));let oeT=null;
+const salvaOE=(r)=>{clearTimeout(oeT);oeT=setTimeout(()=>save('orc',OE),250);if(r!==false)rTot()};
+function rTot(){const t=totOrc(OE);$('#oe-tot').innerHTML=`<div><span>Subtotal</span><span>${money(t.sub)}</span></div>${t.desc?`<div><span>Desconto${OE.descTipo==='%'?' ('+numTxt(OE.desc)+'%)':''}</span><span>– ${money(t.desc)}</span></div>`:''}<div class="g"><span>Total</span><span>${money(t.total)}</span></div>`;
+ $$('#oe-etapas [data-sub]').forEach(s=>s.textContent=money(OE.itens.filter(i=>i.etapa===+s.dataset.sub).reduce((a,i)=>a+num(i.valor)*(+i.qtd||1),0)));
+ const p=pacById(OE.pid);const txt='Olá, '+(p?p.nome.split(' ')[0]:'')+'! Segue o seu plano de tratamento:\n\n'+OE.etapas.map((en,e)=>{const its=OE.itens.filter(i=>i.etapa===e);return its.length?(OE.etapas.length>1?en+':\n':'')+its.map(i=>'• '+i.nome+(i.dente?' (dente '+i.dente+')':'')+' – '+money(num(i.valor)*(+i.qtd||1))).join('\n'):''}).filter(Boolean).join('\n\n')+'\n\n'+(t.desc?'Desconto: '+money(t.desc)+'\n':'')+'Total: '+money(t.total)+(OE.pgto?'\nPagamento: '+OE.pgto:'')+'\n\n'+PROF+' – '+CONFIG.cro;
+ const w=p&&waURL(p.tel,txt);const a=$('#oe-wa');a.hidden=!w||!OE.itens.length;if(w)a.href=w}
+RN.orc=id=>{if(id)OE=D.orc.find(o=>o.id===id);if(!OE){go('orcs');return}const p=pacById(OE.pid);
+ $('#oe-pac').textContent=(p?p.nome:'Paciente removido')+' · '+brD(OE.data);
+ $$('#oe-st button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.s===OE.status)));$('#oe-motw').hidden=OE.status!=='perdido';$('#oe-mot').value=OE.motivo||'';
+ $('#oe-etapas').innerHTML=OE.etapas.map((en,e)=>{const its=OE.itens.filter(i=>i.etapa===e);return`<div class="et"><div class="eth"><input type="text" value="${esc(en)}" data-en="${e}" aria-label="Nome da etapa" autocomplete="off"><span class="v" data-sub="${e}"></span>${OE.etapas.length>1?`<button type="button" class="btn sm" data-rmet="${e}" aria-label="Remover ${esc(en)}">×</button>`:''}</div>
+  ${its.map(i=>`<button type="button" class="oi" data-i="${i.id}"><img src="${ILL.url(i.ill)}" alt=""><span><b>${esc(i.nome)}</b><small>${esc([i.dente&&'Dente '+i.dente,i.face&&'Face '+i.face,(+i.qtd>1)&&i.qtd+'×'].filter(Boolean).join(' · '))}</small>${i.feito?`<span class="chip feito">Realizado ${brD(i.feito).slice(0,5)}</span>`:''}</span><span class="v">${money(num(i.valor)*(+i.qtd||1))}</span></button>`).join('')}
+  <button type="button" class="btn sm add" data-add="${e}">+ Adicionar procedimento</button></div>`}).join('');
+ $$('#oe-etapas [data-en]').forEach(i=>i.oninput=()=>{OE.etapas[+i.dataset.en]=i.value;salvaOE(false)});
+ $$('#oe-etapas [data-rmet]').forEach(b=>b.onclick=async()=>{const e=+b.dataset.rmet;const n=OE.itens.filter(i=>i.etapa===e).length;if(n&&!await ask('Remover '+OE.etapas[e]+'?','Remover etapa','Os '+n+' procedimento(s) desta etapa também saem do orçamento.'))return;
+  OE.itens=OE.itens.filter(i=>i.etapa!==e).map(i=>({...i,etapa:i.etapa>e?i.etapa-1:i.etapa}));OE.etapas.splice(e,1);salvaOE();RN.orc()});
+ $$('#oe-etapas [data-add]').forEach(b=>b.onclick=()=>catalogo(+b.dataset.add));
+ $$('#oe-etapas [data-i]').forEach(b=>b.onclick=()=>openItem(+0,OE.itens.find(i=>i.id===b.dataset.i)));
+ $('#oe-desc').value=OE.desc?numTxt(OE.desc):'';$$('#oe-dt button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.d===OE.descTipo)));$('#oe-pgto').value=OE.pgto||'';$('#oe-val').value=OE.validade||15;$('#oe-obs').value=OE.obs||'';
+ if(OE.assin){$('#oe-assw').innerHTML=`<img class="assimg" src="${OE.assin}" alt="Assinatura do paciente"><div class="acts" style="margin-top:8px"><button type="button" class="btn sm" id="oe-refaz">Refazer assinatura</button></div>`;$('#oe-padw').hidden=true;$('#oe-refaz').onclick=()=>{OE.assin=null;salvaOE(false);RN.orc()}}
+ else{$('#oe-assw').innerHTML='';$('#oe-padw').hidden=false;padO.clear();requestAnimationFrame(()=>padO.fit())}
+ rTot()};
+$$('#oe-st button').forEach(b=>b.onclick=()=>{OE.status=b.dataset.s;if(OE.status==='aprovado'&&!OE.dtAprov)OE.dtAprov=HOJE();if(OE.status!=='perdido')OE.motivo='';salvaOE();$$('#oe-st button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));$('#oe-motw').hidden=OE.status!=='perdido';if(OE.status==='aprovado')toast('Orçamento aprovado. Marque cada procedimento como realizado conforme for fazendo.')});
+$('#oe-mot').onchange=()=>{OE.motivo=$('#oe-mot').value;salvaOE(false)};
+$('#oe-addet').onclick=()=>{OE.etapas.push('Etapa '+(OE.etapas.length+1));salvaOE();RN.orc()};
+$('#oe-desc').oninput=()=>{OE.desc=num($('#oe-desc').value);salvaOE()};
+$$('#oe-dt button').forEach(b=>b.onclick=()=>{OE.descTipo=b.dataset.d;$$('#oe-dt button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));salvaOE()});
+$('#oe-pgto').oninput=()=>{OE.pgto=$('#oe-pgto').value.trim();salvaOE()};
+$('#oe-val').oninput=()=>{OE.validade=Math.max(1,parseInt($('#oe-val').value)||15);salvaOE(false)};
+$('#oe-obs').oninput=()=>{OE.obs=$('#oe-obs').value;salvaOE(false)};
+$('#oe-limpa').onclick=()=>{padO.clear();OE.assin=null;salvaOE(false)};
+padO.canvas.addEventListener('pointerup',()=>{if(padO.drawn){OE.assin=padO.canvas.toDataURL('image/png');salvaOE(false)}});
+$('#oe-del').onclick=async()=>{if(!await ask('Excluir este orçamento?','Excluir','Isso não pode ser desfeito.'))return;await rm('orc',OE.id);await rm('doc','orc-'+OE.id).catch(()=>0);OE=null;toast('Orçamento excluído');go('orcs')};
+function catalogo(e){const draw=q=>{const k=norm(q);const l=CFG.cat.filter(c=>!k||norm(c.nome).includes(k));
+  mds.querySelector('#k-grid').innerHTML=l.map(c=>`<button type="button" data-k="${c.cod}"><img src="${ILL.url(c.ill)}" alt=""><b>${esc(c.nome)}</b><small>${money(c.valor)}</small></button>`).join('')+`<button type="button" data-k="avulso"><img src="${ILL.url('generico')}" alt=""><b>Outro procedimento</b><small>Digitar nome e valor</small></button>`;
+  mds.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{const c=b.dataset.k==='avulso'?{cod:'avulso',nome:'',ill:'generico',valor:0,desc:''}:CFG.cat.find(x=>x.cod===b.dataset.k);openItem(e,null,c)})};
+ modal(`<h2>Escolha o procedimento</h2><p class="note">Toque para ver a ilustração e incluir no orçamento${OE.etapas.length>1?' ('+esc(OE.etapas[e])+')':''}.</p><input type="search" id="k-q" placeholder="Buscar" aria-label="Buscar procedimento" style="margin-top:10px"><div class="cat" id="k-grid"></div><div class="acts" style="margin-top:14px"><button type="button" class="btn" id="k-x">Fechar</button></div>`);
+ draw('');mds.querySelector('#k-q').oninput=ev=>draw(ev.target.value);$('#k-x').onclick=fecharMd}
+function openItem(e,it,c){const novo=!it;const i=it?{...it}:{id:uid(),cod:c.cod,nome:c.nome,ill:c.ill,valor:c.valor,qtd:1,dente:'',face:'',etapa:e,feito:null};
+ const desc=(CFG.cat.find(x=>x.cod===i.cod)||{}).desc||'';const faces=['M','D','O','V','L'];const sel=String(i.face||'').split(/[,\s]+/);
+ modal(`<img class="big" src="${ILL.url(i.ill)}" alt="Ilustração: ${esc(i.nome||'procedimento')}"><h2>${esc(i.nome||'Outro procedimento')}</h2>${desc?`<p class="note">${esc(desc)}</p>`:''}
+ <div class="grid">${i.cod==='avulso'?`<label class="f c6">Nome do procedimento<input type="text" id="i-nome" value="${esc(i.nome)}" autocomplete="off" autofocus></label><label class="f c6">Ilustração<select id="i-ill">${ILL.keys.map(k=>`<option value="${k}"${k===i.ill?' selected':''}>${ILLN[k]}</option>`).join('')}</select></label>`:''}
+ <label class="f c3">Valor unitário (R$)<input type="text" id="i-val" inputmode="decimal" value="${numTxt(i.valor)}" autocomplete="off"></label>
+ <label class="f c3">Quantidade<input type="number" id="i-qtd" min="1" value="${+i.qtd||1}"></label>
+ <label class="f c3">Dente(s)<input type="text" id="i-dente" value="${esc(i.dente)}" placeholder="ex.: 36 ou 11, 21" autocomplete="off"></label>
+ ${OE.etapas.length>1?`<label class="f c3">Etapa<select id="i-et">${OE.etapas.map((n,k)=>`<option value="${k}"${k===i.etapa?' selected':''}>${esc(n)}</option>`).join('')}</select></label>`:''}
+ <div class="f c6" style="font-size:14px;color:var(--mute)">Face (opcional)<div class="faces" role="group" aria-label="Faces do dente">${faces.map(f=>`<label><input type="checkbox" value="${f}"${sel.includes(f)?' checked':''}><span>${f}</span></label>`).join('')}</div></div>
+ ${!novo&&OE.status==='aprovado'?`<label class="f c3">Realizado em<input type="date" id="i-feito" value="${i.feito||''}"></label><div class="c3" style="display:flex;align-items:flex-end"><button type="button" class="btn sm" id="i-hoje">Realizado hoje</button></div>`:''}
+ </div><p class="err" id="i-err" role="alert"></p>
+ <div class="acts" style="margin-top:14px">${novo?'<button type="button" class="btn pri" id="i-ok">Aceito · incluir no orçamento</button><button type="button" class="btn" id="i-x">Agora não</button>':'<button type="button" class="btn pri" id="i-ok">Salvar</button><button type="button" class="btn" id="i-rm">Remover do orçamento</button><button type="button" class="btn" id="i-x">Fechar</button>'}</div>`);
+ if($('#i-hoje'))$('#i-hoje').onclick=()=>{$('#i-feito').value=HOJE()};
+ $('#i-x').onclick=fecharMd;
+ if($('#i-rm'))$('#i-rm').onclick=()=>{OE.itens=OE.itens.filter(x=>x.id!==i.id);salvaOE();fecharMd();RN.orc()};
+ if($('#i-ill'))$('#i-ill').onchange=()=>{mds.querySelector('.big').src=ILL.url(mv('i-ill'))};
+ $('#i-ok').onclick=()=>{if(i.cod==='avulso'){i.nome=mv('i-nome');i.ill=mv('i-ill')||'generico';if(!i.nome){$('#i-err').textContent='Informe o nome do procedimento.';return}}
+  i.valor=num(mv('i-val'));i.qtd=Math.max(1,parseInt(mv('i-qtd'))||1);i.dente=mv('i-dente');i.face=[...mds.querySelectorAll('.faces input:checked')].map(x=>x.value).join(', ');
+  if($('#i-et'))i.etapa=+mv('i-et');if($('#i-feito'))i.feito=mv('i-feito')||null;
+  const k=OE.itens.findIndex(x=>x.id===i.id);if(k<0)OE.itens.push(i);else OE.itens[k]=i;salvaOE();mdClose=null;fecharMd();RN.orc();if(novo)toast(i.nome+' incluído')}}
+
+/* ---------- PDF do orçamento ---------- */
+const fontesOK=()=>Promise.all(['600 23px "Cormorant Garamond"','italic 600 34px "Cormorant Garamond"','400 13px Lato','700 13px Lato','italic 400 13px Lato'].map(f=>document.fonts.load(f).catch(()=>0)));
+const loadImg=src=>new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src=src});
+function corta(c,t,max){if(c.measureText(t).width<=max)return t;while(t&&c.measureText(t+'…').width>max)t=t.slice(0,-1);return t+'…'}
+function itemPDF(R,i){R.need(72);const c=R.c,y=R.y+4,w=72,h=60;
+ c.save();rrect(c,M,y,w,h,9);c.clip();const im=ILLIMG[i.ill]||ILLIMG.generico;if(im&&im.complete&&im.naturalWidth)c.drawImage(im,M,y,w,h);c.restore();c.strokeStyle='#E2D3C7';c.lineWidth=1;rrect(c,M,y,w,h,9);c.stroke();
+ const x=M+w+16,vw=130;c.fillStyle=VAL;c.font=F(700,14.5,LATO);c.fillText(corta(c,i.nome,W-w-16-vw),x,y+25);
+ const multi=/[,\s]/.test(String(i.dente||'').trim());const det=[i.dente&&(multi?'Dentes ':'Dente ')+i.dente,i.face&&'Face '+i.face,+i.qtd>1&&i.qtd+' × '+money(i.valor)].filter(Boolean).join('   ·   ');
+ c.font=F(400,12.5,LATO);c.fillStyle='#6B5A4F';if(det)c.fillText(corta(c,det,W-w-16-vw),x,y+45);
+ c.font=F(700,14.5,LATO);c.fillStyle=VAL;c.textAlign='right';c.fillText(money(num(i.valor)*(+i.qtd||1)),M+W,y+35);c.textAlign='left';
+ c.strokeStyle='#E8DCD2';c.beginPath();c.moveTo(M,y+h+6.5);c.lineTo(M+W,y+h+6.5);c.stroke();R.y+=h+12}
+function linhaR(R,l,v,b){R.need(24);const c=R.c;c.font=F(b?700:400,13.5,LATO);c.fillStyle=b?VAL:INK;c.textAlign='right';c.fillText(l,M+W-150,R.y+16);c.fillText(v,M+W,R.y+16);c.textAlign='left';R.y+=22}
+async function buildOrc(o){await fontesOK();await illOK;const p=pacById(o.pid)||{};const R=new Doc('Plano de Tratamento',stampTxt());const t=totOrc(o);
+ R.fields([['Paciente',p.nome||'',.7],['Data',brD(o.data),.3]]);
+ R.fields([['Telefone',p.tel||'',.5],['Validade da proposta',(o.validade||15)+' dias',.5]]);R.y+=4;
+ o.etapas.forEach((en,e)=>{const its=o.itens.filter(i=>i.etapa===e);if(!its.length)return;R.sec(o.etapas.length>1?en:'Procedimentos');its.forEach(i=>itemPDF(R,i));
+  if(o.etapas.filter((_,k)=>o.itens.some(i=>i.etapa===k)).length>1)linhaR(R,'Subtotal da etapa',money(its.reduce((a,i)=>a+num(i.valor)*(+i.qtd||1),0)));R.y+=4});
+ R.need(t.desc?120:96);const c=R.c,bh=t.desc?92:62,by=R.y+6;c.fillStyle='#4B3428';rrect(c,M,by,W,bh,12);c.fill();c.fillStyle='#F5ECE5';c.font=F(400,13.5,LATO);let yy=by+26;
+ const lr=(l,v,f)=>{c.font=f;c.textAlign='left';c.fillText(l,M+22,yy);c.textAlign='right';c.fillText(v,M+W-22,yy);c.textAlign='left'};
+ if(t.desc){lr('Subtotal',money(t.sub),F(400,13.5,LATO));yy+=22;lr('Desconto'+(o.descTipo==='%'?' ('+numTxt(o.desc)+'%)':''),'– '+money(t.desc),F(400,13.5,LATO));yy+=30}else yy+=14;
+ lr('Total do tratamento',money(t.total),F(700,19,LATO));R.y=by+bh+14;
+ if(o.pgto)R.fields([['Forma de pagamento',o.pgto,1]]);
+ if(o.obs){R.sec('Observações');R.box(o.obs,'left')}
+ const[Y,Mo,Dd]=o.data.split('-').map(Number);R.dateLine(`${CONFIG.cidade}, ${Dd} de ${MESES[Mo-1]} de ${Y}.`,'Valores sujeitos a reavaliação clínica.');
+ const ai=o.assin?await loadImg(o.assin):null;R.sigs([{pad:ai?{drawn:true,canvas:ai}:null,l:'De acordo – '+(p.nome||'Paciente')},{pad:null,l:PROF+' – '+CONFIG.cro}]);return R}
+const prevURL=cv=>{const k=360/cv.width;const t=document.createElement('canvas');t.width=360;t.height=Math.round(cv.height*k);t.getContext('2d').drawImage(cv,0,0,t.width,t.height);return t.toDataURL('image/jpeg',.7)};
+function abrirPDF(prev,blob,name,n){atual={blob,name};$('#ov-img').src=prev||'';$('#ov-img').hidden=!prev;$('#ov-info').textContent=name+(n?` · ${n} página${n>1?'s':''}`:'')+` · ${Math.round(blob.size/1024)} KB`;msg('');
+ let canShare=false;try{canShare=!dl&&!!navigator.canShare&&navigator.canShare({files:[new File([blob],name,{type:'application/pdf'})]})}catch(_){}$('#compart').hidden=!canShare;$('#ov').classList.add('on');$('#salvar').focus()}
+function abrirDoc(id){const d=D.doc.find(x=>x.id===id);if(!d||!d.blob){toast('Documento indisponível');return}abrirPDF(d.prev,d.blob,d.nome)}
+$('#oe-pdf').onclick=async()=>{if(!OE.itens.length){toast('Inclua ao menos um procedimento');return}const b=$('#oe-pdf');b.disabled=true;b.textContent='Gerando…';
+ try{clearTimeout(oeT);await save('orc',OE);const R=await buildOrc(OE);const blob=await toPDF(R.pages);const p=pacById(OE.pid)||{};const name=('Plano de Tratamento - '+(p.nome||'Paciente').replace(/[\\/:*?"<>|]/g,'').slice(0,60)+' - '+OE.data+'.pdf');
+  const pv=prevURL(R.pages[0]);await save('doc',{id:'orc-'+OE.id,pid:OE.pid,tipo:'orcamento',titulo:'Plano de Tratamento (PDF)',data:OE.data,nome:name,blob,prev:pv});abrirPDF(pv,blob,name,R.pages.length)}
+ catch(e){console.error(e);toast('Não foi possível gerar o PDF neste aparelho')}finally{b.disabled=false;b.textContent='Gerar PDF'}};
+
+/* ---------- fichas ligadas ao paciente ---------- */
+let fichaPid=null,fichaDoc={};
+function vincular(p){fichaPid=p.id;const set=(id,val)=>{const el=$('#'+id);if(el&&val)el.value=val};
+ set('a-nome',p.nome);set('a-idade',idadeDe(p.nasc));set('a-cpf',p.cpf);set('a-tel',p.tel);set('a-email',p.email);set('a-end',p.end);set('t-nome',p.nome);set('t-cpf',p.cpf);$('#f-pac').value=p.nome;updVinc()}
+function desvincular(){fichaPid=null;fichaDoc={};$('#f-pac').value='';updVinc()}
+function updVinc(){const p=fichaPid&&pacById(fichaPid);$('#f-vinc').innerHTML=p?`Ficha vinculada a <b>${esc(p.nome)}</b>. O PDF será guardado no histórico do paciente. <button type="button" class="lk" id="f-desv" style="padding:0;min-height:0">Desvincular</button>`:'Escolha um paciente para preencher os dados automaticamente. Se não escolher, o paciente é cadastrado ao gerar a ficha.';const b=$('#f-desv');if(b)b.onclick=desvincular}
+$('#f-pac').onchange=()=>{const p=pacByNome($('#f-pac').value);if(p)vincular(p)};
+async function aposFicha(R,blob,name){try{let pid=fichaPid;const nome=v(aba==='anamnese'?'a-nome':'t-nome');
+ if(!pid&&nome){const cpf=dig(v('a-cpf')||v('t-cpf'));let p=(cpf.length===11&&D.pac.find(x=>dig(x.cpf)===cpf))||pacByNome(nome);
+  if(!p){p={id:uid(),nome,criado:Date.now()}}if(aba==='anamnese'){const m={tel:v('a-tel'),cpf:v('a-cpf'),email:v('a-email'),end:v('a-end')};for(const k in m)if(m[k]&&!p[k])p[k]=m[k]}else if(!p.cpf&&v('t-cpf'))p.cpf=v('t-cpf');
+  await save('pac',p);dls();pid=p.id;fichaPid=pid;$('#f-pac').value=p.nome;updVinc()}
+ if(!pid)return'';const id=fichaDoc[aba]||uid();fichaDoc[aba]=id;
+ await save('doc',{id,pid,tipo:aba,titulo:aba==='anamnese'?'Ficha de Anamnese':'Termo de Consentimento',data:v('data')||hoje(),nome:name,blob,prev:prevURL(R.pages[0])});
+ return' · guardado no histórico de '+pacById(pid).nome}catch(_){return''}}
+
+/* ---------- ajustes ---------- */
+RN.cfg=()=>{$('#cf-cli').value=CFG.clinicas.join(', ');
+ $('#cf-dur').innerHTML=[15,20,30,40,45,60,75,90,120].map(d=>`<option value="${d}"${d==CFG.dur?' selected':''}>${d} minutos</option>`).join('');
+ $('#cf-ret').innerHTML=[3,4,6,9,12].map(m=>`<option value="${m}"${m==CFG.retorno?' selected':''}>${m} meses sem visita</option>`).join('');
+ $('#cf-mconf').value=CFG.msgConf;$('#cf-mret').value=CFG.msgRet;
+ $('#cf-bk').textContent=(CFG.lastBk?'Última cópia em '+new Date(CFG.lastBk).toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'})+'. ':'Nenhuma cópia feita ainda. ')+'A cópia é protegida por senha e pode ser guardada no Google Drive, no e-mail ou no computador. Faça pelo menos uma vez por semana.';
+ rCat()};
+function rCat(){$('#cf-cat').innerHTML=CFG.cat.map((c,k)=>`<div class="cr" data-k="${k}"><img src="${ILL.url(c.ill)}" alt=""><div><input type="text" data-f="nome" value="${esc(c.nome)}" aria-label="Nome do procedimento" autocomplete="off"><div class="g2"><input type="text" data-f="valor" inputmode="decimal" value="${numTxt(c.valor)}" aria-label="Valor de ${esc(c.nome)} em reais" autocomplete="off"><select data-f="ill" aria-label="Ilustração">${ILL.keys.map(i=>`<option value="${i}"${i===c.ill?' selected':''}>${ILLN[i]}</option>`).join('')}</select></div><textarea data-f="desc" aria-label="Explicação para o paciente">${esc(c.desc||'')}</textarea></div><button type="button" class="btn sm" data-rm aria-label="Remover ${esc(c.nome)}">×</button></div>`).join('');
+ $$('#cf-cat .cr').forEach(r=>{const c=CFG.cat[+r.dataset.k];r.querySelectorAll('[data-f]').forEach(i=>{i.oninput=i.onchange=()=>{const f=i.dataset.f;c[f]=f==='valor'?num(i.value):i.value;if(f==='ill')r.querySelector('img').src=ILL.url(c.ill);saveCfg();dls()}});
+  r.querySelector('[data-rm]').onclick=async()=>{if(!await ask('Remover '+(c.nome||'este procedimento')+' da lista?','Remover'))return;CFG.cat.splice(CFG.cat.indexOf(c),1);saveCfg();dls();rCat()}})}
+$('#cf-addcat').onclick=()=>{CFG.cat.push({cod:'u'+uid(),nome:'Novo procedimento',ill:'generico',valor:0,desc:''});saveCfg();rCat();const l=$$('#cf-cat .cr');const inp=l[l.length-1].querySelector('input');inp.focus();inp.select()};
+$('#cf-cli').oninput=()=>{CFG.clinicas=$('#cf-cli').value.split(',').map(s=>s.trim()).filter(Boolean);saveCfg();dls()};
+$('#cf-dur').onchange=()=>{CFG.dur=+$('#cf-dur').value;saveCfg()};$('#cf-ret').onchange=()=>{CFG.retorno=+$('#cf-ret').value;saveCfg()};
+$('#cf-mconf').oninput=()=>{CFG.msgConf=$('#cf-mconf').value;saveCfg()};$('#cf-mret').oninput=()=>{CFG.msgRet=$('#cf-mret').value;saveCfg()};
+
+/* ---------- cópia de segurança (criptografada) ---------- */
+const b64=buf=>{let s='';const u=new Uint8Array(buf);for(let i=0;i<u.length;i+=32768)s+=String.fromCharCode.apply(null,u.subarray(i,i+32768));return btoa(s)};
+const unb64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+async function chave(pw,salt){const k=await crypto.subtle.importKey('raw',new TextEncoder().encode(pw),'PBKDF2',false,['deriveKey']);return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:250000,hash:'SHA-256'},k,{name:'AES-GCM',length:256},false,['encrypt','decrypt'])}
+async function salvarArq(blob,name){if(dl){const r=await dl.save({filename:name,data:blob});return r}const u=URL.createObjectURL(blob);const a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000)}
+function backup(){if(!window.crypto||!crypto.subtle){toast('Abra o app pelo endereço https para fazer a cópia');return}
+ modal(`<h2>Cópia de segurança</h2><p class="note">Crie uma senha para proteger a cópia. Ela será pedida para restaurar. Sem a senha, ninguém consegue abrir o arquivo — nem você.</p><div class="grid"><label class="f c3">Senha<input type="password" id="b-pw" autocomplete="new-password" autofocus></label><label class="f c3">Repita a senha<input type="password" id="b-pw2" autocomplete="new-password"></label></div><p class="err" id="b-err" role="alert"></p>
+ <div class="acts" style="margin-top:14px"><button type="button" class="btn pri" id="b-ok">Gerar cópia</button><button type="button" class="btn" id="b-x">Cancelar</button></div>`);
+ $('#b-x').onclick=fecharMd;
+ $('#b-ok').onclick=async()=>{const pw=$('#b-pw').value;if(pw.length<6){$('#b-err').textContent='Use pelo menos 6 caracteres.';return}if(pw!==$('#b-pw2').value){$('#b-err').textContent='As senhas não conferem.';return}
+  const b=$('#b-ok');b.disabled=true;b.textContent='Gerando…';
+  try{const docs=await Promise.all(D.doc.map(async d=>({...d,blob:d.blob?b64(await d.blob.arrayBuffer()):null})));
+   const data={app:'odonto',v:2,cro:CONFIG.cro,em:new Date().toISOString(),pac:D.pac,con:D.con,orc:D.orc,nota:D.nota,doc:docs,cfg:CFG};
+   const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12));
+   const ct=await crypto.subtle.encrypt({name:'AES-GCM',iv},await chave(pw,salt),new TextEncoder().encode(JSON.stringify(data)));
+   const blob=new Blob([JSON.stringify({formato:'odonto-backup',v:1,salt:b64(salt),iv:b64(iv),dados:b64(ct)})],{type:'application/octet-stream'});
+   await salvarArq(blob,'Copia de seguranca - '+CONFIG.nome+' - '+HOJE()+'.odonto');CFG.lastBk=Date.now();saveCfg();mdClose=null;fecharMd();toast('Cópia gerada. Guarde o arquivo em local seguro.');RN[PG]&&RN[PG]()}
+  catch(e){b.disabled=false;b.textContent='Gerar cópia';$('#b-err').textContent=e&&e.code==='declined'?'Salvamento cancelado.':'Não foi possível gerar a cópia neste aparelho.'}}}
+$('#cf-exp').onclick=backup;
+$('#cf-imp').onchange=e=>{const f=e.target.files[0];e.target.value='';if(!f)return;
+ modal(`<h2>Restaurar cópia</h2><p class="note">${esc(f.name)}</p><div class="grid"><label class="f c6">Senha da cópia<input type="password" id="r-pw" autocomplete="current-password" autofocus></label></div><p class="err" id="r-err" role="alert"></p>
+ <div class="acts" style="margin-top:14px"><button type="button" class="btn pri" id="r-ok">Abrir cópia</button><button type="button" class="btn" id="r-x">Cancelar</button></div>`);
+ $('#r-x').onclick=fecharMd;
+ $('#r-ok').onclick=async()=>{let data;try{const j=JSON.parse(await f.text());if(j.formato!=='odonto-backup')throw 0;
+   const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:unb64(j.iv)},await chave($('#r-pw').value,unb64(j.salt)),unb64(j.dados));data=JSON.parse(new TextDecoder().decode(pt))}
+  catch(_){$('#r-err').textContent='Senha incorreta ou arquivo inválido.';return}
+  mdClose=null;fecharMd();
+  if(!await ask(`Substituir os dados deste aparelho pela cópia de ${new Date(data.em).toLocaleDateString('pt-BR')}?`,'Substituir',`A cópia tem ${data.pac.length} paciente(s), ${data.con.length} consulta(s) e ${data.orc.length} orçamento(s). Os dados atuais deste aparelho serão apagados.`))return;
+  for(const s of ['pac','con','orc','doc','nota'])await DB.clear(s);
+  for(const s of ['pac','con','orc','nota'])for(const o of data[s]||[])await DB.put(s,o);
+  for(const d of data.doc||[])await DB.put('doc',{...d,blob:d.blob?new Blob([unb64(d.blob)],{type:'application/pdf'}):null});
+  CFG=Object.assign(JSON.parse(JSON.stringify(CFG0)),data.cfg||{});await DB.put('kv',CFG);await carregar();dls();toast('Cópia restaurada');go('agenda')}};
+
+/* ---------- início ---------- */
+(async()=>{try{await DB.open();await carregar();if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>0)}catch(e){toast('Este navegador não permite guardar dados. Use o Chrome ou o Safari.')}
+ dls();updVinc();go('agenda')})();
+
 }
 </script>
 <script>
