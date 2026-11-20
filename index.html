@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fichas</title>
+<meta name="theme-color" content="#4B3428">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Fichas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,600&family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* VOICE: calmo, clínico e elegante, como a recepção de um bom consultório.
+   IDEA: a prancheta de fichas que o paciente recebe, agora no celular.
+   PICTURE: o próprio formulário, uma coluna tranquila, com assinatura na tela.
+   COLOUR and TYPE: marfim, tinta marrom-escura e bronze do logo; Cormorant Garamond + Lato.
+   LAYOUT: cabeçalho da marca, abas, uma coluna de campos, barra fixa com "Gerar PDF". */
+:root{color-scheme:light dark;--bg:light-dark(#FBF8F5,#191311);--card:light-dark(#FFFFFF,#241B17);--ink:light-dark(#2B211C,#F2E8E0);--mute:light-dark(#6B5A4F,#C2B1A5);--line:light-dark(#E2D3C7,#3D2F28);--br:light-dark(#7A5640,#D2A88A);--dk:#4B3428;--pill:light-dark(#EFE4DB,#33261F);--err:light-dark(#A3271C,#FF9C8F)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Lato,system-ui,sans-serif;overflow-x:clip}
+.top{display:flex;align-items:center;gap:12px;padding:14px max(4vw,16px)}
+.top svg{width:40px;height:41px;flex:none}
+.brand b{display:block;font:600 19px/1.15 'Cormorant Garamond',serif;letter-spacing:.2em}
+.brand span{display:block;font-size:10.5px;letter-spacing:.22em;color:var(--mute)}.brand .cro{color:var(--br);font-weight:700;letter-spacing:.14em}
+@media(max-width:400px){.brand b{font-size:17px;letter-spacing:.14em}.brand span{letter-spacing:.14em}}
+.tabs{display:flex;gap:4px;padding:0 max(4vw,16px);position:sticky;top:0;background:var(--bg);z-index:5;border-bottom:1px solid var(--line)}
+.tabs button{flex:1;min-height:48px;border:0;background:none;font:700 15px Lato,sans-serif;color:var(--mute);border-bottom:3px solid transparent;cursor:pointer;padding:0 6px}
+.tabs button[aria-selected=true]{color:var(--ink);border-color:var(--br)}
+main{max-width:720px;margin:0 auto;padding:4px 16px 130px}
+h1{font:italic 600 clamp(30px,6vw,40px)/1.1 'Cormorant Garamond',serif;margin:22px 0 6px;text-wrap:balance}
+.lead{color:var(--mute);margin:0;font-size:15px}
+fieldset{border:0;padding:0;margin:26px 0 0}
+legend{font:italic 600 23px/1.3 'Cormorant Garamond',serif;padding:2px 14px;background:linear-gradient(90deg,var(--pill),transparent);border-radius:8px;width:100%;margin-bottom:12px}
+.grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+.c6{grid-column:span 6}.c4{grid-column:span 4}.c3{grid-column:span 3}.c2{grid-column:span 2}
+@media(max-width:560px){.c4,.c3,.cl{grid-column:span 6}.c2{grid-column:span 3}}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute)}
+input[type=text],input[type=email],input[type=tel],input[type=date],textarea{font:16px Lato,sans-serif;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-height:46px;width:100%}
+textarea{min-height:90px;resize:vertical}
+input:focus-visible,textarea:focus-visible,button:focus-visible,.chk input:focus-visible+span,.yn input:focus-visible+span{outline:3px solid var(--br);outline-offset:2px}
+.q{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:10px 0;border-bottom:1px solid var(--line)}
+.q>.t{flex:1 1 240px}
+.yn{display:flex;gap:6px}
+.yn label{position:relative}
+.yn input,.chk input{position:absolute;opacity:0;width:1px;height:1px}
+.yn span{display:inline-flex;align-items:center;justify-content:center;min-width:64px;min-height:44px;border:1px solid var(--line);border-radius:999px;background:var(--card);font-weight:700;font-size:15px;cursor:pointer}
+.yn input:checked+span{background:var(--dk);color:#F5ECE5;border-color:var(--dk)}
+.q .more{flex:1 1 100%}
+.chks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media(max-width:560px){.chks{grid-template-columns:minmax(0,1fr)}}
+.chk{position:relative;display:flex}
+.chk span{flex:1;display:flex;align-items:center;gap:10px;min-height:46px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);cursor:pointer;font-size:15px;line-height:1.3}
+.chk span::before{content:"";flex:none;width:20px;height:20px;border:1.5px solid var(--mute);border-radius:5px}
+.chk input:checked+span{border-color:var(--br)}
+.chk input:checked+span::before{border-color:var(--dk);background:var(--dk) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M2.5 7.5l3 3 6-7' fill='none' stroke='%23F5ECE5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat}
+.txt{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;font-size:15.5px;line-height:1.6}
+.txt p{margin:0 0 10px}.txt p:last-child{margin:0}
+.sig{border:1.5px dashed var(--br);border-radius:12px;background:#FFFFFF;position:relative;overflow:hidden}
+.sig canvas{display:block;width:100%;height:170px;touch-action:none;cursor:crosshair}
+.sig .ph{position:absolute;left:0;right:0;bottom:12px;text-align:center;color:#7C6658;font-size:13px;pointer-events:none}
+.sig .ln{position:absolute;left:8%;right:8%;bottom:38px;border-top:1px solid #C9B3A3;pointer-events:none}
+.sig.has .ph{visibility:hidden}
+.sigh{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:16px 0 6px;font-size:14px;color:var(--mute)}
+.btn{white-space:nowrap;min-height:46px;padding:0 20px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:700 15px Lato,sans-serif;cursor:pointer}
+.btn.sm{min-height:44px;padding:0 14px;font-size:14px}
+.btn.pri{background:var(--dk);color:#F5ECE5;border-color:var(--dk)}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--dk);padding:12px max(4vw,16px) calc(12px + env(safe-area-inset-bottom));display:flex;gap:10px;align-items:center;justify-content:center;z-index:6}
+.bar .pri{background:#F5ECE5;color:#3A2A21;border-color:#F5ECE5;flex:0 1 300px}
+.bar .ghost{background:transparent;color:#F5ECE5;border-color:rgba(245,236,229,.45)}
+.err{color:var(--err);font-size:14px;margin:12px 0 0;font-weight:700}
+.note{font-size:13px;color:var(--mute);margin:8px 0 0}
+.imp{display:grid;grid-template-columns:repeat(5,minmax(0,1fr)) 44px;gap:6px;margin-bottom:8px}
+.imp input{padding:10px 8px}
+@media(max-width:560px){.imp{grid-template-columns:repeat(2,minmax(0,1fr))}.imp .x{grid-column:span 2}}
+.thumbs{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.thumbs img{height:90px;border-radius:8px;border:1px solid var(--line)}
+.ov{position:fixed;inset:0;background:rgba(20,14,11,.62);display:none;align-items:flex-start;justify-content:center;overflow:auto;padding:20px 12px;z-index:10}
+.ov.on{display:flex}
+.sheet{background:var(--bg);border-radius:16px;max-width:520px;width:100%;padding:18px 18px 20px}
+.sheet h2{font:italic 600 26px/1.2 'Cormorant Garamond',serif;margin:0}
+.sheet img{width:100%;border:1px solid var(--line);border-radius:6px;display:block;margin:12px 0}
+.acts{display:flex;flex-wrap:wrap;gap:8px}
+[hidden]{display:none!important}
+@media(prefers-reduced-motion:no-preference){.ov.on .sheet{animation:up .25s ease-out}@keyframes up{from{transform:translateY(16px);opacity:0}}}
+</style>
+</head>
+<body>
+<header class="top">
+<svg viewBox="12 10 134 136" aria-hidden="true"><defs><linearGradient id="bz" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#A97A5A"/><stop offset=".5" stop-color="#7A5038"/><stop offset="1" stop-color="#9A6A4C"/></linearGradient></defs><path fill="url(#bz)" d="M106.23 143.85C106.33 143.60 107.09 143.29 108.11 143.09C108.65 142.99 109.43 142.79 109.82 142.65C110.22 142.51 111.05 142.24 111.65 142.05C114.36 141.23 116.76 140.26 118.50 139.31C120.90 137.98 121.42 137.68 122.91 136.73C130.86 131.63 136.24 125.49 138.81 118.59C139.99 115.41 140.46 113.58 140.91 110.31C141.52 105.92 141.51 103.22 140.90 99.95C140.80 99.40 140.64 98.55 140.55 98.05C140.46 97.55 140.14 96.43 139.84 95.55C139.53 94.67 139.16 93.59 139.00 93.14C138.18 90.75 136.86 88.50 133.81 84.30C131.70 81.38 128.65 78.37 123.49 74.09C122.80 73.52 121.72 72.62 121.09 72.09C120.03 71.20 119.32 70.64 115.41 67.62C114.61 67.00 113.68 66.25 113.35 65.97C112.78 65.47 110.16 63.31 107.39 61.06C105.70 59.69 101.71 55.69 100.64 54.30C98.84 51.97 97.57 49.61 97.03 47.60C96.84 46.86 96.61 46.02 96.53 45.75C96.45 45.48 96.34 44.51 96.28 43.60C96.12 41.12 96.29 39.62 97.05 36.68C97.39 35.39 99.28 31.57 100.50 29.75C100.75 29.36 101.13 28.78 101.33 28.45C102.56 26.42 105.30 23.72 108.40 21.47C111.65 19.12 116.52 16.70 119.73 15.85C120.27 15.71 120.85 15.53 121.03 15.45C121.20 15.38 121.75 15.24 122.25 15.15C122.75 15.06 123.69 14.85 124.35 14.69C125.00 14.53 126.04 14.33 126.65 14.25C130.33 13.75 131.22 13.59 131.27 13.44C131.35 13.20 129.07 12.90 127.17 12.90C125.68 12.90 120.69 13.32 119.42 13.55C118.32 13.74 115.80 14.29 115.45 14.40C115.28 14.45 114.30 14.70 113.25 14.94C109.62 15.79 107.24 16.81 103.28 19.23C98.89 21.91 94.88 25.73 92.58 29.45C89.70 34.10 88.45 37.19 87.76 41.40C87.42 43.46 87.40 43.66 87.39 46.30C87.37 49.05 87.37 49.05 87.78 51.35C88.20 53.74 88.81 56.00 89.44 57.47C89.62 57.90 89.83 58.43 89.90 58.65C90.36 60.10 92.64 63.78 94.28 65.73C96.82 68.75 99.93 71.87 102.55 74.04C102.93 74.36 103.72 75.02 104.30 75.50C104.88 75.99 106.09 76.98 107.00 77.70C107.91 78.42 109.05 79.37 109.55 79.80C110.46 80.59 111.77 81.64 113.91 83.30C116.34 85.18 119.77 88.25 122.01 90.55C125.63 94.27 128.61 98.46 129.25 100.76C129.34 101.08 129.59 101.89 129.80 102.55C131.30 107.22 131.24 112.06 129.64 117.07C128.13 121.80 126.63 124.45 123.28 128.37C120.76 131.31 118.79 133.07 115.26 135.53C110.47 138.88 107.15 140.48 102.20 141.83C99.93 142.45 99.67 142.50 96.95 142.80C95.91 142.92 94.43 143.10 93.67 143.21C91.99 143.44 90.26 143.45 88.48 143.24C86.76 143.04 84.38 143.01 83.88 143.18C83.53 143.30 83.10 143.71 83.10 143.91C83.10 143.96 88.21 144.00 94.64 144.00C104.64 144.00 106.19 143.98 106.23 143.85ZM78.45 140.24C78.65 140.16 78.86 139.74 79.44 138.25C79.88 137.14 80.54 135.65 81.51 133.63C82.16 132.27 82.13 131.40 81.40 131.10C80.98 130.92 80.41 131.01 79.30 131.43C78.67 131.66 77.82 131.87 76.82 132.04C74.56 132.42 73.95 132.77 73.95 133.68C73.95 134.27 74.23 134.84 75.57 136.96C76.12 137.83 76.72 138.84 76.91 139.19C77.41 140.13 77.89 140.45 78.45 140.24ZM73.15 130.49C73.51 130.38 74.56 130.13 75.48 129.94C76.40 129.75 77.71 129.44 78.40 129.25C79.09 129.06 80.08 128.82 80.61 128.71C84.71 127.87 86.56 125.98 85.40 123.81C84.78 122.65 83.91 122.28 82.45 122.54C80.07 122.98 73.22 124.52 71.70 124.96C70.30 125.37 69.30 126.43 69.30 127.50C69.30 128.84 70.96 130.70 72.16 130.70C72.34 130.70 72.78 130.61 73.15 130.49ZM72.85 121.71C73.32 121.54 74.49 121.25 75.43 121.05C76.38 120.85 77.76 120.49 78.50 120.25C80.48 119.62 82.48 119.02 83.05 118.89C84.20 118.61 85.12 117.94 85.55 117.03C85.95 116.22 85.72 115.12 85.02 114.37C84.14 113.43 83.05 113.30 81.60 113.94C80.80 114.30 78.86 114.79 77.05 115.09C76.66 115.16 75.91 115.32 75.37 115.46C74.82 115.60 73.63 115.84 72.71 115.99C70.90 116.30 70.52 116.45 69.78 117.09C68.51 118.21 68.46 119.81 69.64 121.16C70.42 122.06 71.35 122.22 72.85 121.71ZM72.18 112.85C72.93 112.61 74.18 112.27 74.95 112.09C75.72 111.92 77.03 111.58 77.86 111.35C78.69 111.11 79.75 110.84 80.21 110.75C80.67 110.65 81.16 110.53 81.30 110.48C81.44 110.43 82.04 110.25 82.63 110.09C83.95 109.73 84.52 109.45 85.07 108.88C86.57 107.32 86.22 105.10 84.39 104.56C83.65 104.34 83.05 104.36 82.09 104.65C81.63 104.79 80.68 105.04 79.98 105.20C78.27 105.60 76.51 106.04 75.00 106.45C74.31 106.64 73.21 106.88 72.54 107.00C71.22 107.22 70.39 107.47 69.76 107.84C69.16 108.19 68.15 109.28 68.00 109.74C67.64 110.83 68.47 112.42 69.73 113.04C70.41 113.39 70.59 113.37 72.18 112.85ZM71.88 103.90C75.07 103.10 77.77 102.39 78.35 102.20C78.68 102.10 79.50 101.87 80.18 101.70C80.86 101.54 81.49 101.36 81.59 101.30C81.69 101.25 82.33 101.07 83.01 100.90C84.92 100.43 85.87 99.62 86.25 98.14C86.53 97.03 86.13 96.09 85.04 95.34C84.52 94.98 84.41 94.95 83.70 94.91C82.97 94.88 82.80 94.92 81.43 95.38C79.60 96.00 78.55 96.29 74.80 97.20C69.74 98.43 69.15 98.66 68.19 99.82C67.30 100.90 67.19 102.02 67.89 103.04C68.24 103.55 68.59 103.82 69.16 104.04C70.02 104.37 70.05 104.37 71.88 103.90ZM70.27 94.96C70.66 94.77 71.74 94.41 72.67 94.15C73.59 93.89 74.75 93.56 75.25 93.40C75.75 93.24 76.78 92.95 77.55 92.76C78.32 92.56 79.35 92.30 79.85 92.16C80.34 92.03 81.36 91.78 82.11 91.61C82.86 91.43 83.75 91.16 84.09 91.00C85.30 90.42 86.40 89.00 86.40 88.01C86.40 87.07 85.55 85.80 84.66 85.39C84.02 85.10 83.51 85.15 82.07 85.65C81.36 85.90 80.34 86.21 79.81 86.35C79.28 86.48 77.52 86.95 75.90 87.41C74.28 87.86 72.28 88.40 71.45 88.62C69.39 89.16 68.52 89.59 67.66 90.51C66.85 91.37 66.61 91.85 66.60 92.61C66.60 93.67 67.06 94.50 67.94 95.01C68.67 95.43 69.32 95.41 70.27 94.96ZM68.90 85.70C69.49 85.47 71.28 84.99 73.17 84.56C74.88 84.17 76.51 83.70 78.48 83.04C79.21 82.80 79.87 82.60 79.96 82.60C80.05 82.60 80.71 82.40 81.43 82.17C82.16 81.93 83.00 81.67 83.30 81.60C84.59 81.30 85.56 80.63 85.94 79.80C86.12 79.38 86.14 79.09 86.19 75.75C86.30 68.65 86.31 68.72 85.59 68.34C85.11 68.10 67.53 68.16 67.06 68.41C66.39 68.77 66.36 68.91 66.39 72.04C66.43 77.52 66.60 84.26 66.70 84.75C66.93 85.90 67.62 86.19 68.90 85.70ZM85.65 66.25C86.06 66.09 86.24 65.71 86.16 65.21C86.09 64.77 84.44 62.32 83.26 60.91C82.77 60.33 82.07 59.45 81.70 58.95C81.32 58.45 80.62 57.57 80.13 56.99C79.65 56.40 78.89 55.46 78.44 54.89C77.99 54.32 76.80 52.85 75.79 51.64C74.78 50.42 73.54 48.89 73.03 48.24C72.15 47.09 71.23 46.00 68.05 42.32C66.33 40.34 64.62 38.30 63.17 36.50C61.79 34.79 60.78 33.60 59.30 31.94C57.77 30.22 56.41 28.61 55.76 27.72C52.51 23.34 52.58 23.46 52.53 22.40C52.49 21.78 52.53 21.52 52.74 20.91C53.05 20.02 53.06 19.70 52.81 19.39C52.62 19.15 52.62 19.15 47.93 19.07C40.25 18.95 16.72 19.03 16.28 19.18C15.54 19.43 15.70 19.68 16.85 20.01C19.91 20.90 23.04 21.95 24.65 22.62C25.77 23.08 29.14 25.02 30.24 25.84C30.94 26.35 32.67 27.77 32.95 28.05C34.53 29.64 40.39 36.16 42.20 38.35C42.39 38.58 43.09 39.37 43.75 40.09C45.99 42.55 46.38 43.04 50.30 48.21C51.98 50.42 54.60 53.69 56.25 55.60C57.49 57.05 58.83 58.67 59.58 59.64C59.93 60.09 60.83 61.14 61.58 61.99C62.89 63.47 63.36 64.03 64.25 65.19C65.04 66.22 65.12 66.24 68.35 66.30C75.23 66.43 85.29 66.41 85.65 66.25Z"/></svg>
+<div class="brand"><b id="b-nome"></b><span id="b-esp"></span><span class="cro" id="b-cro"></span></div>
+</header>
+<nav class="tabs" aria-label="Formulários">
+<button type="button" data-t="anamnese" aria-selected="true">Ficha de Anamnese</button>
+<button type="button" data-t="termo" aria-selected="false">Termo</button>
+</nav>
+
+<main>
+<fieldset>
+<legend>Atendimento</legend>
+<div class="grid">
+<label class="f c2">Cidade<input type="text" id="cidade" autocomplete="off"></label>
+<label class="f c2">Data<input type="date" id="data"></label>
+<label class="f c2 cl">Clínica (opcional)<input type="text" id="clinica" autocomplete="off"></label>
+</div>
+<p class="note">Os dados ficam só neste aparelho enquanto a página está aberta. Nada é enviado pela internet: o PDF é gerado aqui mesmo.</p>
+</fieldset>
+
+<section class="view" id="anamnese">
+<h1>Ficha de Anamnese</h1>
+<p class="lead">Preencha com calma. Ao final, assine com o dedo na tela.</p>
+
+<fieldset><legend>Identificação</legend>
+<div class="grid">
+<label class="f c4">Nome completo<input type="text" id="a-nome" autocomplete="off"></label>
+<label class="f c2">Idade<input type="text" id="a-idade" inputmode="numeric" autocomplete="off"></label>
+<label class="f c3">CPF<input type="text" id="a-cpf" inputmode="numeric" autocomplete="off"></label>
+<label class="f c3">Telefone<input type="tel" id="a-tel" autocomplete="off"></label>
+<label class="f c6">E-mail<input type="email" id="a-email" autocomplete="off"></label>
+<label class="f c6">Endereço<input type="text" id="a-end" autocomplete="off"></label>
+<label class="f c6">Contato de emergência (nome e telefone)<input type="text" id="a-emerg" autocomplete="off"></label>
+</div></fieldset>
+
+<fieldset><legend>Histórico de Saúde Geral</legend>
+<div id="q-saude1"></div>
+<p style="margin:14px 0 8px">Possui alguma das condições abaixo?</p>
+<div class="chks" id="conds"></div>
+<label class="f" style="margin-top:8px">Outras condições<input type="text" id="c-outras" autocomplete="off"></label>
+<div id="q-saude2"></div>
+</fieldset>
+
+<fieldset><legend>Hábitos e Condições Bucais</legend>
+<div class="chks">
+<label class="chk"><input type="checkbox" id="h-tab"><span>Tabagista</span></label>
+<label class="chk"><input type="checkbox" id="h-alc"><span>Uso de bebidas alcoólicas</span></label>
+<label class="chk"><input type="checkbox" id="h-brux"><span>Bruxismo/rangimento</span></label>
+</div>
+<label class="f" style="margin-top:8px">Outro hábito<input type="text" id="h-outro" autocomplete="off"></label>
+<div id="q-hab"></div>
+</fieldset>
+
+<fieldset><legend>Para as Mulheres</legend><div id="q-mul"></div></fieldset>
+
+<fieldset><legend>Observações Adicionais</legend>
+<textarea id="a-obs" aria-label="Observações adicionais"></textarea>
+</fieldset>
+
+<fieldset><legend>Declaração</legend>
+<label class="chk"><input type="checkbox" id="a-decl"><span>Declaro que as informações acima são verdadeiras e completas, e estou ciente de que a omissão de dados pode comprometer a segurança do tratamento odontológico.</span></label>
+<div class="sigh"><span>Assinatura do(a) paciente</span><button type="button" class="btn sm" data-clear="pa">Limpar</button></div>
+<div class="sig" id="pa"><canvas aria-label="Área de assinatura do paciente"></canvas><div class="ln"></div><div class="ph">Assine aqui com o dedo</div></div>
+</fieldset>
+<p class="err" id="a-err" role="alert"></p>
+</section>
+
+<section class="view" id="termo" hidden>
+<h1>Termo de Consentimento Informado</h1>
+<p class="lead">Implante dentário. Leia o termo com o paciente antes de assinar.</p>
+
+<fieldset><legend>Paciente</legend>
+<div class="grid">
+<label class="f c4">Nome completo<input type="text" id="t-nome" autocomplete="off"></label>
+<label class="f c2">CPF<input type="text" id="t-cpf" inputmode="numeric" autocomplete="off"></label>
+</div></fieldset>
+
+<fieldset><legend>Termo</legend>
+<div class="txt" id="termo-txt"></div>
+<label class="chk" style="margin-top:10px"><input type="checkbox" id="t-ok"><span>Li o termo, minhas dúvidas foram esclarecidas e concordo com o tratamento.</span></label>
+</fieldset>
+
+<fieldset><legend>Referências do(s) Implante(s)</legend>
+<div id="imps"></div>
+<div class="acts"><button type="button" class="btn sm" id="add-imp">Adicionar implante</button>
+<label class="btn sm" style="display:inline-flex;align-items:center">Anexar foto do adesivo<input type="file" id="foto" accept="image/*" multiple hidden></label>
+<button type="button" class="btn sm" id="limpa-foto" hidden>Remover fotos</button></div>
+<div class="thumbs" id="thumbs"></div>
+<p class="note">Preencha os dados ou anexe a foto dos adesivos de identificação. Pode ficar em branco e ser completado depois da cirurgia.</p>
+</fieldset>
+
+<fieldset><legend>Assinaturas</legend>
+<div class="sigh"><span>Assinatura do(a) paciente</span><button type="button" class="btn sm" data-clear="pt">Limpar</button></div>
+<div class="sig" id="pt"><canvas aria-label="Área de assinatura do paciente"></canvas><div class="ln"></div><div class="ph">Assine aqui com o dedo</div></div>
+<div class="sigh"><span id="sig-prof"></span><button type="button" class="btn sm" data-clear="pd">Limpar</button></div>
+<div class="sig" id="pd"><canvas aria-label="Área de assinatura do dentista"></canvas><div class="ln"></div><div class="ph">Assinatura do dentista</div></div>
+</fieldset>
+<p class="err" id="t-err" role="alert"></p>
+</section>
+</main>
+
+<div class="bar">
+<button type="button" class="btn ghost" id="novo">Nova ficha</button>
+<button type="button" class="btn pri" id="gerar">Gerar PDF</button>
+</div>
+
+<div class="ov" id="ov" role="dialog" aria-modal="true" aria-labelledby="ov-t">
+<div class="sheet">
+<h2 id="ov-t">PDF pronto</h2>
+<p class="note" id="ov-info"></p>
+<img id="ov-img" alt="Prévia da primeira página do PDF">
+<div class="acts">
+<button type="button" class="btn pri" id="salvar">Salvar PDF</button>
+<button type="button" class="btn" id="compart" hidden>Compartilhar</button>
+<button type="button" class="btn" id="fechar">Fechar</button>
+</div>
+<p class="note" id="ov-msg" role="status"></p>
+</div>
+</div>
+
+<script>
+{
+/* ===== CONFIGURAÇÃO DO PROFISSIONAL — altere aqui para personalizar ===== */
+const CONFIG={
+ tratamento:'Dr.',                       // Dr. / Dra.
+ nome:'Ygor Santiago',
+ cro:'CRO-CE 13046',
+ especialidade:'IMPLANTODONTIA AVANÇADA',
+ whatsapp:'(85) 99844-1727',
+ email:'ygorsant2104@gmail.com',
+ instagram:'@dr.ygorsantiago',
+ cidade:'Fortaleza'
+};
+/* ======================================================================== */
+const FEM=/^dra/i.test(CONFIG.tratamento);const PROF=CONFIG.tratamento+' '+CONFIG.nome, PROFU=(CONFIG.tratamento.replace('.','')+' '+CONFIG.nome).toUpperCase();
+const MARK="M106.23 143.85C106.33 143.60 107.09 143.29 108.11 143.09C108.65 142.99 109.43 142.79 109.82 142.65C110.22 142.51 111.05 142.24 111.65 142.05C114.36 141.23 116.76 140.26 118.50 139.31C120.90 137.98 121.42 137.68 122.91 136.73C130.86 131.63 136.24 125.49 138.81 118.59C139.99 115.41 140.46 113.58 140.91 110.31C141.52 105.92 141.51 103.22 140.90 99.95C140.80 99.40 140.64 98.55 140.55 98.05C140.46 97.55 140.14 96.43 139.84 95.55C139.53 94.67 139.16 93.59 139.00 93.14C138.18 90.75 136.86 88.50 133.81 84.30C131.70 81.38 128.65 78.37 123.49 74.09C122.80 73.52 121.72 72.62 121.09 72.09C120.03 71.20 119.32 70.64 115.41 67.62C114.61 67.00 113.68 66.25 113.35 65.97C112.78 65.47 110.16 63.31 107.39 61.06C105.70 59.69 101.71 55.69 100.64 54.30C98.84 51.97 97.57 49.61 97.03 47.60C96.84 46.86 96.61 46.02 96.53 45.75C96.45 45.48 96.34 44.51 96.28 43.60C96.12 41.12 96.29 39.62 97.05 36.68C97.39 35.39 99.28 31.57 100.50 29.75C100.75 29.36 101.13 28.78 101.33 28.45C102.56 26.42 105.30 23.72 108.40 21.47C111.65 19.12 116.52 16.70 119.73 15.85C120.27 15.71 120.85 15.53 121.03 15.45C121.20 15.38 121.75 15.24 122.25 15.15C122.75 15.06 123.69 14.85 124.35 14.69C125.00 14.53 126.04 14.33 126.65 14.25C130.33 13.75 131.22 13.59 131.27 13.44C131.35 13.20 129.07 12.90 127.17 12.90C125.68 12.90 120.69 13.32 119.42 13.55C118.32 13.74 115.80 14.29 115.45 14.40C115.28 14.45 114.30 14.70 113.25 14.94C109.62 15.79 107.24 16.81 103.28 19.23C98.89 21.91 94.88 25.73 92.58 29.45C89.70 34.10 88.45 37.19 87.76 41.40C87.42 43.46 87.40 43.66 87.39 46.30C87.37 49.05 87.37 49.05 87.78 51.35C88.20 53.74 88.81 56.00 89.44 57.47C89.62 57.90 89.83 58.43 89.90 58.65C90.36 60.10 92.64 63.78 94.28 65.73C96.82 68.75 99.93 71.87 102.55 74.04C102.93 74.36 103.72 75.02 104.30 75.50C104.88 75.99 106.09 76.98 107.00 77.70C107.91 78.42 109.05 79.37 109.55 79.80C110.46 80.59 111.77 81.64 113.91 83.30C116.34 85.18 119.77 88.25 122.01 90.55C125.63 94.27 128.61 98.46 129.25 100.76C129.34 101.08 129.59 101.89 129.80 102.55C131.30 107.22 131.24 112.06 129.64 117.07C128.13 121.80 126.63 124.45 123.28 128.37C120.76 131.31 118.79 133.07 115.26 135.53C110.47 138.88 107.15 140.48 102.20 141.83C99.93 142.45 99.67 142.50 96.95 142.80C95.91 142.92 94.43 143.10 93.67 143.21C91.99 143.44 90.26 143.45 88.48 143.24C86.76 143.04 84.38 143.01 83.88 143.18C83.53 143.30 83.10 143.71 83.10 143.91C83.10 143.96 88.21 144.00 94.64 144.00C104.64 144.00 106.19 143.98 106.23 143.85ZM78.45 140.24C78.65 140.16 78.86 139.74 79.44 138.25C79.88 137.14 80.54 135.65 81.51 133.63C82.16 132.27 82.13 131.40 81.40 131.10C80.98 130.92 80.41 131.01 79.30 131.43C78.67 131.66 77.82 131.87 76.82 132.04C74.56 132.42 73.95 132.77 73.95 133.68C73.95 134.27 74.23 134.84 75.57 136.96C76.12 137.83 76.72 138.84 76.91 139.19C77.41 140.13 77.89 140.45 78.45 140.24ZM73.15 130.49C73.51 130.38 74.56 130.13 75.48 129.94C76.40 129.75 77.71 129.44 78.40 129.25C79.09 129.06 80.08 128.82 80.61 128.71C84.71 127.87 86.56 125.98 85.40 123.81C84.78 122.65 83.91 122.28 82.45 122.54C80.07 122.98 73.22 124.52 71.70 124.96C70.30 125.37 69.30 126.43 69.30 127.50C69.30 128.84 70.96 130.70 72.16 130.70C72.34 130.70 72.78 130.61 73.15 130.49ZM72.85 121.71C73.32 121.54 74.49 121.25 75.43 121.05C76.38 120.85 77.76 120.49 78.50 120.25C80.48 119.62 82.48 119.02 83.05 118.89C84.20 118.61 85.12 117.94 85.55 117.03C85.95 116.22 85.72 115.12 85.02 114.37C84.14 113.43 83.05 113.30 81.60 113.94C80.80 114.30 78.86 114.79 77.05 115.09C76.66 115.16 75.91 115.32 75.37 115.46C74.82 115.60 73.63 115.84 72.71 115.99C70.90 116.30 70.52 116.45 69.78 117.09C68.51 118.21 68.46 119.81 69.64 121.16C70.42 122.06 71.35 122.22 72.85 121.71ZM72.18 112.85C72.93 112.61 74.18 112.27 74.95 112.09C75.72 111.92 77.03 111.58 77.86 111.35C78.69 111.11 79.75 110.84 80.21 110.75C80.67 110.65 81.16 110.53 81.30 110.48C81.44 110.43 82.04 110.25 82.63 110.09C83.95 109.73 84.52 109.45 85.07 108.88C86.57 107.32 86.22 105.10 84.39 104.56C83.65 104.34 83.05 104.36 82.09 104.65C81.63 104.79 80.68 105.04 79.98 105.20C78.27 105.60 76.51 106.04 75.00 106.45C74.31 106.64 73.21 106.88 72.54 107.00C71.22 107.22 70.39 107.47 69.76 107.84C69.16 108.19 68.15 109.28 68.00 109.74C67.64 110.83 68.47 112.42 69.73 113.04C70.41 113.39 70.59 113.37 72.18 112.85ZM71.88 103.90C75.07 103.10 77.77 102.39 78.35 102.20C78.68 102.10 79.50 101.87 80.18 101.70C80.86 101.54 81.49 101.36 81.59 101.30C81.69 101.25 82.33 101.07 83.01 100.90C84.92 100.43 85.87 99.62 86.25 98.14C86.53 97.03 86.13 96.09 85.04 95.34C84.52 94.98 84.41 94.95 83.70 94.91C82.97 94.88 82.80 94.92 81.43 95.38C79.60 96.00 78.55 96.29 74.80 97.20C69.74 98.43 69.15 98.66 68.19 99.82C67.30 100.90 67.19 102.02 67.89 103.04C68.24 103.55 68.59 103.82 69.16 104.04C70.02 104.37 70.05 104.37 71.88 103.90ZM70.27 94.96C70.66 94.77 71.74 94.41 72.67 94.15C73.59 93.89 74.75 93.56 75.25 93.40C75.75 93.24 76.78 92.95 77.55 92.76C78.32 92.56 79.35 92.30 79.85 92.16C80.34 92.03 81.36 91.78 82.11 91.61C82.86 91.43 83.75 91.16 84.09 91.00C85.30 90.42 86.40 89.00 86.40 88.01C86.40 87.07 85.55 85.80 84.66 85.39C84.02 85.10 83.51 85.15 82.07 85.65C81.36 85.90 80.34 86.21 79.81 86.35C79.28 86.48 77.52 86.95 75.90 87.41C74.28 87.86 72.28 88.40 71.45 88.62C69.39 89.16 68.52 89.59 67.66 90.51C66.85 91.37 66.61 91.85 66.60 92.61C66.60 93.67 67.06 94.50 67.94 95.01C68.67 95.43 69.32 95.41 70.27 94.96ZM68.90 85.70C69.49 85.47 71.28 84.99 73.17 84.56C74.88 84.17 76.51 83.70 78.48 83.04C79.21 82.80 79.87 82.60 79.96 82.60C80.05 82.60 80.71 82.40 81.43 82.17C82.16 81.93 83.00 81.67 83.30 81.60C84.59 81.30 85.56 80.63 85.94 79.80C86.12 79.38 86.14 79.09 86.19 75.75C86.30 68.65 86.31 68.72 85.59 68.34C85.11 68.10 67.53 68.16 67.06 68.41C66.39 68.77 66.36 68.91 66.39 72.04C66.43 77.52 66.60 84.26 66.70 84.75C66.93 85.90 67.62 86.19 68.90 85.70ZM85.65 66.25C86.06 66.09 86.24 65.71 86.16 65.21C86.09 64.77 84.44 62.32 83.26 60.91C82.77 60.33 82.07 59.45 81.70 58.95C81.32 58.45 80.62 57.57 80.13 56.99C79.65 56.40 78.89 55.46 78.44 54.89C77.99 54.32 76.80 52.85 75.79 51.64C74.78 50.42 73.54 48.89 73.03 48.24C72.15 47.09 71.23 46.00 68.05 42.32C66.33 40.34 64.62 38.30 63.17 36.50C61.79 34.79 60.78 33.60 59.30 31.94C57.77 30.22 56.41 28.61 55.76 27.72C52.51 23.34 52.58 23.46 52.53 22.40C52.49 21.78 52.53 21.52 52.74 20.91C53.05 20.02 53.06 19.70 52.81 19.39C52.62 19.15 52.62 19.15 47.93 19.07C40.25 18.95 16.72 19.03 16.28 19.18C15.54 19.43 15.70 19.68 16.85 20.01C19.91 20.90 23.04 21.95 24.65 22.62C25.77 23.08 29.14 25.02 30.24 25.84C30.94 26.35 32.67 27.77 32.95 28.05C34.53 29.64 40.39 36.16 42.20 38.35C42.39 38.58 43.09 39.37 43.75 40.09C45.99 42.55 46.38 43.04 50.30 48.21C51.98 50.42 54.60 53.69 56.25 55.60C57.49 57.05 58.83 58.67 59.58 59.64C59.93 60.09 60.83 61.14 61.58 61.99C62.89 63.47 63.36 64.03 64.25 65.19C65.04 66.22 65.12 66.24 68.35 66.30C75.23 66.43 85.29 66.41 85.65 66.25Z";
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const COND=['Hipertensão (pressão alta)','Diabetes','Doença cardíaca','Histórico de AVC/infarto','Alteração na coagulação / uso de anticoagulantes','Osteoporose / uso de bisfosfonatos (ex.: alendronato)','Doenças autoimunes','Câncer (em tratamento ou tratado)','Doenças respiratórias (asma, DPOC, etc.)'];
+const QS1=[{n:'acomp',t:'Está em acompanhamento médico?',m:'Qual especialidade?'}];
+const QS2=[{n:'meds',t:'Faz uso contínuo de medicamentos?',m:'Quais?'},{n:'alerg',t:'Tem alergia a medicamentos, anestésicos ou materiais odontológicos?',m:'Qual?'},{n:'cir',t:'Já passou por cirurgias?',m:'Quais?'}];
+const QH=[{n:'atm',t:'Possui alguma disfunção na articulação da mandíbula (ATM)?'},{n:'orto',t:'Já realizou tratamento ortodôntico?'},{n:'outtr',t:'Já realizou outros tratamentos odontológicos?',m:'Quais?'}];
+const QM=[{n:'grav',t:'Está grávida?'},{n:'amam',t:'Está amamentando?'},{n:'antic',t:'Faz uso de anticoncepcional?'}];
+const DECL='Declaro que as informações acima são verdadeiras e completas, e estou ciente de que a omissão de dados pode comprometer a segurança do tratamento odontológico.';
+const TERMO=['declaro que fui devidamente informado(a) '+(FEM?'pela ':'pelo ')+PROF+' ('+CONFIG.cro+') sobre o tratamento com implante dentário, incluindo seus objetivos, benefícios, limitações, riscos e possíveis intercorrências.',
+'Compreendo que o implante tem a finalidade de reabilitar a(s) ausência(s) dentária(s), proporcionando função mastigatória, estética e qualidade de vida, e que, apesar da alta previsibilidade, existe a possibilidade de não integração do implante ao osso (perda do implante), podendo ser necessária sua remoção e nova tentativa de reabilitação, conforme avaliação clínica.',
+'Fui informado(a) de que, como em todo procedimento cirúrgico, podem ocorrer dor, inchaço, hematomas, sangramento e infecção e, com menor frequência, alteração temporária ou permanente da sensibilidade (parestesia) de lábio, queixo ou língua e comunicação com o seio maxilar. Também me foram apresentadas as alternativas de tratamento, como a prótese fixa convencional e a prótese removível.',
+'Fui orientado(a) sobre a importância do acompanhamento pós-operatório e da realização de manutenções periódicas a cada 6 (seis) meses, que incluem avaliação clínica, radiográfica e higienização profissional, essenciais para a longevidade do tratamento e a prevenção de complicações.',
+'Declaro, ainda, estar ciente de que a garantia do(s) implante(s) realizado(s) está condicionada ao cumprimento das manutenções periódicas a cada 6 (seis) meses, conforme orientação profissional. Em caso de perda do implante, estando as manutenções em dia, será realizada a substituição do(s) implante(s), conforme as condições clínicas vigentes e a avaliação do profissional.',
+'Afirmo que todas as minhas dúvidas foram esclarecidas, que compreendi as informações fornecidas e que concordo com a realização do tratamento, autorizando '+(FEM?'a ':'o ')+PROF+' e sua equipe a procederem com a cirurgia de implante dentário e demais condutas necessárias. Estou ciente de que posso revogar este consentimento a qualquer momento antes do início do procedimento.'];
+const MESES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---------- montar formulário ---------- */
+const ynHTML=q=>`<div class="q"><div class="t" id="l-${q.n}">${q.t}</div><div class="yn" role="radiogroup" aria-labelledby="l-${q.n}"><label><input type="radio" name="${q.n}" value="Sim"><span>Sim</span></label><label><input type="radio" name="${q.n}" value="Não"><span>Não</span></label></div>${q.m?`<label class="f more" hidden>${q.m}<input type="text" id="m-${q.n}" autocomplete="off"></label>`:''}</div>`;
+$('#q-saude1').innerHTML=QS1.map(ynHTML).join('');
+$('#q-saude2').innerHTML=QS2.map(ynHTML).join('');
+$('#q-hab').innerHTML=QH.map(ynHTML).join('');
+$('#q-mul').innerHTML=QM.map(ynHTML).join('');
+$('#conds').innerHTML=COND.map((t,i)=>`<label class="chk"><input type="checkbox" id="c${i}"><span>${t}</span></label>`).join('');
+$('#termo-txt').innerHTML='<p><b>Eu, o(a) paciente identificado(a) acima,</b> '+TERMO.map((p,i)=>i?`<p>${p}</p>`:`${p}</p>`).join('');
+document.addEventListener('change',e=>{const r=e.target;if(r.type==='radio'){const m=r.closest('.q').querySelector('.more');if(m){m.hidden=r.value!=='Sim'}}});
+const hoje=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+$('#data').value=hoje();
+$('#cidade').value=CONFIG.cidade;$('#b-nome').textContent=PROFU;$('#b-esp').textContent=CONFIG.especialidade;$('#b-cro').textContent=CONFIG.cro;$('#sig-prof').textContent=PROF+' – '+CONFIG.cro;document.title='Fichas · '+PROF;
+
+/* implantes */
+let impN=0;
+function addImp(){impN++;const d=document.createElement('div');d.className='imp';d.innerHTML=['Marca','Modelo','Diâmetro','Comprimento','Lote'].map(p=>`<input type="text" placeholder="${p}" aria-label="${p} do implante ${impN}" autocomplete="off">`).join('')+`<button type="button" class="btn sm x" aria-label="Remover implante">×</button>`;d.querySelector('.x').onclick=()=>d.remove();$('#imps').appendChild(d)}
+$('#add-imp').onclick=addImp;addImp();
+let fotos=[];
+function thumbs(){$('#thumbs').innerHTML='';fotos.forEach(f=>{const i=new Image();i.src=f.src;i.alt='Foto do adesivo do implante';$('#thumbs').appendChild(i)});$('#limpa-foto').hidden=!fotos.length}
+$('#foto').onchange=e=>{[...e.target.files].forEach(file=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{fotos.push(im);thumbs()};im.src=r.result};r.readAsDataURL(file)});e.target.value=''};
+$('#limpa-foto').onclick=()=>{fotos=[];thumbs()};
+
+/* ---------- assinaturas ---------- */
+function Pad(wrap){const c=wrap.querySelector('canvas'),g=c.getContext('2d');let drawn=false,down=false,last=null;
+ function fit(){if(drawn)return;const r=c.getBoundingClientRect();if(!r.width)return;const d=window.devicePixelRatio||1;c.width=Math.round(r.width*d);c.height=Math.round(r.height*d);g.setTransform(d,0,0,d,0,0);g.lineWidth=2.3;g.lineCap='round';g.lineJoin='round';g.strokeStyle='#1F2A55';g.fillStyle='#1F2A55'}
+ const pt=e=>{const r=c.getBoundingClientRect();return[e.clientX-r.left,e.clientY-r.top]};
+ c.addEventListener('pointerdown',e=>{if(!drawn)fit();down=true;try{c.setPointerCapture(e.pointerId)}catch(_){}last=pt(e);g.beginPath();g.arc(last[0],last[1],1.1,0,7);g.fill();drawn=true;wrap.classList.add('has');e.preventDefault()});
+ c.addEventListener('pointermove',e=>{if(!down)return;const p=pt(e);g.beginPath();g.moveTo(last[0],last[1]);g.lineTo(p[0],p[1]);g.stroke();last=p;e.preventDefault()});
+ const up=()=>{down=false};c.addEventListener('pointerup',up);c.addEventListener('pointercancel',up);
+ return{fit,clear(){drawn=false;wrap.classList.remove('has');fit();g.clearRect(0,0,c.width,c.height)},get drawn(){return drawn},canvas:c}}
+const pads={pa:Pad($('#pa')),pt:Pad($('#pt')),pd:Pad($('#pd'))};
+$$('[data-clear]').forEach(b=>b.onclick=()=>pads[b.dataset.clear].clear());
+const fitAll=()=>Object.values(pads).forEach(p=>p.fit());
+window.addEventListener('resize',fitAll);requestAnimationFrame(fitAll);
+
+/* ---------- abas ---------- */
+let aba='anamnese';
+function show(id){aba=id;$$('.tabs button').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.t===id)));$$('.view').forEach(v=>v.hidden=v.id!==id);
+ if(id==='termo'){if(!$('#t-nome').value)$('#t-nome').value=$('#a-nome').value;if(!$('#t-cpf').value)$('#t-cpf').value=$('#a-cpf').value}
+ requestAnimationFrame(fitAll);window.scrollTo(0,0)}
+$$('.tabs button').forEach(b=>b.onclick=()=>show(b.dataset.t));
+
+/* ---------- leitura ---------- */
+const v=id=>(($('#'+id)||{}).value||'').trim();
+const yn=n=>{const r=document.querySelector(`input[name="${n}"]:checked`);return r?r.value:''};
+const ck=id=>$('#'+id).checked;
+const extra=n=>yn(n)==='Sim'?v('m-'+n):'';
+
+/* ---------- desenho do PDF (A4 em px CSS) ---------- */
+const S=2.5,PW=794,PH=1123,M=52,W=PW-2*M,TOP=214,BOT=1047;
+const INK='#2B211C',VAL='#14100D',LN='#8F7767',BR='#7A5640',DK='#4B3428';
+const LATO='Lato, Helvetica, Arial, sans-serif',CORM='"Cormorant Garamond", Georgia, serif';
+const F=(w,s,f)=>`${w} ${s}px ${f}`;
+const markP=new Path2D(MARK);
+function wrap(c,t,max){const out=[];String(t||'').split(/\n/).forEach(par=>{const ws=par.split(/\s+/).filter(Boolean);let l='';ws.forEach(w=>{const tr=l?l+' '+w:w;if(c.measureText(tr).width<=max||!l)l=tr;else{out.push(l);l=w}});if(l)out.push(l)});return out}
+function spaced(c,t,cx,y,ls){const ch=[...t];const tw=ch.reduce((a,k)=>a+c.measureText(k).width,0)+ls*(ch.length-1);let x=cx-tw/2;ch.forEach(k=>{c.fillText(k,x,y);x+=c.measureText(k).width+ls})}
+function mark(c,x,y,h,alpha){const s=h/131.5;c.save();c.globalAlpha=alpha;c.translate(x-15.5*s,y-13*s);c.scale(s,s);const gr=c.createLinearGradient(15,13,143,145);gr.addColorStop(0,'#9A6A4C');gr.addColorStop(.45,'#7A5038');gr.addColorStop(.7,'#5A3826');gr.addColorStop(1,'#8A5E44');c.fillStyle=gr;c.fill(markP);c.restore()}
+function rrect(c,x,y,w,h,r){c.beginPath();if(c.roundRect)c.roundRect(x,y,w,h,r);else c.rect(x,y,w,h)}
+const ICONS=[['WHATSAPP',CONFIG.whatsapp,'M20.5 11.8a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.3-4.2A8.5 8.5 0 1 1 20.5 11.8zM9 8.5c0 3.5 2.6 6.5 6.3 6.6l.9-1.6-1.9-.9-.9.8c-1.2-.5-2.1-1.4-2.6-2.6l.8-.9-.9-1.9-1.7.5z'],['E-MAIL',CONFIG.email,'M5 5.5h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2zM3.5 6.5l8.5 6.5 8.5-6.5'],['INSTAGRAM',CONFIG.instagram,'M8.5 3.5h7a5 5 0 0 1 5 5v7a5 5 0 0 1-5 5h-7a5 5 0 0 1-5-5v-7a5 5 0 0 1 5-5zM16 12a4 4 0 1 1-8 0a4 4 0 1 1 8 0z']];
+function frame(c,title,stamp){
+ c.fillStyle='#FBF8F5';c.fillRect(0,0,PW,PH);
+ mark(c,PW-215,430,274,.045);
+ mark(c,PW/2-33,26,67,1);
+ c.fillStyle='#3A2A21';c.textBaseline='alphabetic';
+ c.font=F(600,23,CORM);spaced(c,PROFU,PW/2,117,6.4);
+ c.font=F(400,8.5,LATO);spaced(c,CONFIG.especialidade,PW/2,131,3.8);
+ c.fillStyle=BR;c.font=F(700,10,LATO);spaced(c,CONFIG.cro,PW/2,147,1.8);
+ c.font='italic '+F(600,34,CORM);c.fillStyle=INK;const tw=c.measureText(title).width;c.textAlign='center';c.fillText(title,PW/2,190);c.textAlign='left';
+ c.strokeStyle='#B89A85';c.lineWidth=1;c.beginPath();c.moveTo(56,179);c.lineTo(PW/2-tw/2-20,179);c.moveTo(PW/2+tw/2+20,179);c.lineTo(PW-56,179);c.stroke();
+ c.fillStyle=DK;c.fillRect(0,PH-56,PW,56);
+ const cols=[PW/6,PW/2,PW*5/6];
+ ICONS.forEach(([lab,val,d],i)=>{c.font=F(400,13,LATO);const vw=c.measureText(val).width;const iw=24+10+vw;const x0=cols[i]-iw/2;
+  c.save();c.translate(x0,PH-40);c.strokeStyle='#F5ECE5';c.lineWidth=1.6;c.lineCap='round';c.lineJoin='round';c.stroke(new Path2D(d));c.restore();
+  c.fillStyle='#D9C4B4';c.font=F(400,9,LATO);let x=x0+34;[...lab].forEach(k=>{c.fillText(k,x,PH-34);x+=c.measureText(k).width+1.3});
+  c.fillStyle='#F5ECE5';c.font=F(400,13,LATO);c.fillText(val,x0+34,PH-18)});
+ c.fillStyle='rgba(245,236,229,.35)';c.fillRect(PW/3,PH-43,1,30);c.fillRect(PW*2/3,PH-43,1,30);
+ c.fillStyle='#7C6658';c.font='italic '+F(400,10,LATO);c.textAlign='center';c.fillText(stamp,PW/2,PH-64);c.textAlign='left';
+}
+class Doc{
+ constructor(title,stamp){this.title=title;this.stamp=stamp;this.pages=[];this.cur=null;this.c=new Proxy({},{get:(_,k)=>{const x=this.cur[k];return typeof x==='function'?x.bind(this.cur):x},set:(_,k,val)=>{this.cur[k]=val;return true}});this.add()}
+ add(){const cv=document.createElement('canvas');cv.width=PW*S;cv.height=PH*S;const c=cv.getContext('2d');c.scale(S,S);frame(c,this.pages.length?this.title+' (cont.)':this.title,this.stamp);this.pages.push(cv);this.cur=c;this.y=TOP}
+ need(h){if(this.y+h>BOT)this.add()}
+ sec(t){this.need(56);const c=this.c;this.y+=4;const gr=c.createLinearGradient(M,0,M+460,0);gr.addColorStop(0,'#EADCD1');gr.addColorStop(1,'rgba(234,220,209,0)');c.fillStyle=gr;rrect(c,M,this.y,460,27,6);c.fill();c.fillStyle='#3A2A21';c.font='italic '+F(600,20,CORM);c.fillText(t,M+14,this.y+20);this.y+=30}
+ pill(t){const c=this.c;c.font='italic '+F(600,20,CORM);const w=c.measureText(t).width+60;c.fillStyle='#EADCD1';rrect(c,PW/2-w/2,this.y-14,w,30,15);c.fill();c.fillStyle='#3A2A21';c.textAlign='center';c.fillText(t,PW/2,this.y+7);c.textAlign='left';this.y+=30}
+ fields(arr){const c=this.c,G=18;const n=arr.length;const lay=arr.map(([l,val,f])=>{const fw=W*f-G*(n-1)/n;c.font=F(400,13.5,LATO);const lw=c.measureText(l+': ').width;c.font=F(700,13.5,LATO);return{l,fw,lw,lines:wrap(c,val,fw-lw-6)}});
+  const h=Math.max(...lay.map(o=>Math.max(1,o.lines.length)))*19+2;this.need(h);let cx=M;
+  lay.forEach(o=>{const by=this.y+15;c.font=F(400,13.5,LATO);c.fillStyle=INK;c.fillText(o.l+':',cx,by);const k=Math.max(1,o.lines.length);
+   for(let i=0;i<k;i++){const yy=by+i*19;c.strokeStyle=LN;c.lineWidth=.8;c.beginPath();c.moveTo(cx+o.lw,yy+4);c.lineTo(cx+o.fw,yy+4);c.stroke();if(o.lines[i]){c.font=F(700,13.5,LATO);c.fillStyle=VAL;c.fillText(o.lines[i],cx+o.lw+3,yy)}}
+   cx+=o.fw+G});this.y+=h}
+ box1(x,y,on){const c=this.c;c.strokeStyle='#6B5446';c.lineWidth=1;c.strokeRect(x+.5,y-10.5,11,11);if(on){c.strokeStyle=DK;c.lineWidth=1.9;c.lineCap='round';c.beginPath();c.moveTo(x+2.6,y-5);c.lineTo(x+5.2,y-2.4);c.lineTo(x+10,y-8.4);c.stroke();c.lineCap='butt'}}
+ text(t){this.need(22);const c=this.c;c.font=F(400,13.5,LATO);c.fillStyle=INK;c.fillText(t,M,this.y+15);this.y+=21}
+ checks(items){const c=this.c;const rows=Math.ceil(items.length/2);this.need(rows*18+3);c.font=F(400,13.5,LATO);
+  items.forEach(([t,on],i)=>{const col=i<rows?0:1,row=i<rows?i:i-rows;const x=M+10+col*(W/2),y=this.y+15+row*18;this.box1(x,y,on);c.fillStyle=on?VAL:INK;c.font=F(on?700:400,13.5,LATO);c.fillText(t,x+17,y)});this.y+=rows*18+3}
+ yn(q,a,ml,mv){const c=this.c;this.need(20);c.font=F(400,13.5,LATO);const by=this.y+15;c.fillStyle=INK;c.fillText(q,M,by);let cx=M+c.measureText(q).width+16;
+  ['Sim','Não'].forEach(o=>{this.box1(cx,by,a===o);c.font=F(a===o?700:400,13.5,LATO);c.fillStyle=a===o?VAL:INK;c.fillText(o,cx+16,by);cx+=16+c.measureText(o).width+14});
+  if(ml&&mv){const lab=ml.replace('?','');c.font=F(400,13.5,LATO);const lw=c.measureText(lab+': ').width;c.font=F(700,13.5,LATO);const rest=M+W-cx-8;
+   if(rest-lw>120&&wrap(c,mv,rest-lw-6).length===1){c.font=F(400,13.5,LATO);c.fillStyle=INK;c.fillText(lab+':',cx+8,by);c.strokeStyle=LN;c.lineWidth=.8;c.beginPath();c.moveTo(cx+8+lw,by+4);c.lineTo(M+W,by+4);c.stroke();c.font=F(700,13.5,LATO);c.fillStyle=VAL;c.fillText(mv,cx+11+lw,by);this.y+=20}
+   else{this.y+=20;this.fields([[lab,mv,1]])}}else this.y+=20}
+ ynLine(items){const c=this.c;this.need(20);const by=this.y+15;c.font=F(400,13.5,LATO);const ws=items.map(([q])=>c.measureText(q).width+12+2*(16+c.measureText('Não').width+10)-10);const gap=(W-ws.reduce((a,b)=>a+b,0))/(items.length-1);let x0=M;items.forEach(([q,a],i)=>{let cx=x0;x0+=ws[i]+gap;c.font=F(400,13.5,LATO);c.fillStyle=INK;c.fillText(q,cx,by);cx+=c.measureText(q).width+12;['Sim','Não'].forEach(o=>{this.box1(cx,by,a===o);c.font=F(a===o?700:400,13.5,LATO);c.fillStyle=a===o?VAL:INK;c.fillText(o,cx+16,by);cx+=16+c.measureText(o).width+10})});this.y+=20}
+ box(t,align,empty){const c=this.c;c.font=F(empty?'italic 400':'400',13.5,LATO);const lines=wrap(c,t,W-40);const h=lines.length*19+16;this.need(h+12);this.y+=4;
+  c.fillStyle='rgba(255,255,255,.7)';rrect(c,M,this.y,W,h,10);c.fill();c.strokeStyle='#C9B3A3';c.lineWidth=1;c.stroke();c.fillStyle=empty?'#7C6658':INK;
+  lines.forEach((l,i)=>{const y=this.y+22+i*19;if(align==='center'){c.textAlign='center';c.fillText(l,PW/2,y);c.textAlign='left'}else c.fillText(l,M+20,y)});this.y+=h+8}
+ para(t,lead){const c=this.c;c.font=F(400,14,LATO);const lines=wrap(c,t,W);lines.forEach((l,i)=>{this.need(21);const y=this.y+15;const last=i===lines.length-1;const ws=l.split(' ');
+   if(last||ws.length<2){c.fillStyle=INK;c.fillText(l,M,y)}else{const tw=ws.reduce((a,w)=>a+c.measureText(w).width,0);const gap=(W-tw)/(ws.length-1);let x=M;c.fillStyle=INK;ws.forEach(w=>{c.fillText(w,x,y);x+=c.measureText(w).width+gap})}this.y+=21});this.y+=7}
+ table(rows){const c=this.c,H=['Marca','Modelo','Diâmetro','Comprimento','Lote'],cw=W/5;const draw=(cells,bold,fill)=>{this.need(26);if(fill){c.fillStyle='#EFE4DB';c.fillRect(M,this.y,W,26)}c.strokeStyle='#C9B3A3';c.lineWidth=1;c.strokeRect(M+.5,this.y+.5,W-1,26);
+   cells.forEach((t,i)=>{if(i)c.fillRect(M+i*cw,this.y,0,0);c.beginPath();c.moveTo(M+i*cw+.5,this.y);c.lineTo(M+i*cw+.5,this.y+26);c.stroke();c.font=F(bold?700:400,13,LATO);c.fillStyle=bold?'#3A2A21':VAL;let s=t;while(s&&c.measureText(s).width>cw-12)s=s.slice(0,-1);c.fillText(s,M+i*cw+7,this.y+17)});this.y+=26};
+  draw(H,true,true);rows.forEach(r=>draw(r,false,false));this.y+=10}
+ image(im){const c=this.c;const k=Math.min(W/im.width,230/im.height,1.2);const w=im.width*k,h=im.height*k;this.need(h+12);c.drawImage(im,M,this.y,w,h);c.strokeStyle='#C9B3A3';c.strokeRect(M+.5,this.y+.5,w-1,h-1);this.y+=h+12}
+ dateLine(t,t2){this.need(t2?50:34);const c=this.c;c.font=F(400,14,LATO);c.fillStyle=INK;c.textAlign='center';c.fillText(t,PW/2,this.y+20);if(t2){c.font=F(400,12.5,LATO);c.fillStyle='#5E4C41';c.fillText(t2,PW/2,this.y+39)}c.textAlign='left';this.y+=t2?44:28}
+ sigs(list){this.need(106);const c=this.c,w=300;list.forEach((s,i)=>{const x=list.length===1?PW/2-w/2:(i?PW-M-w:M);const base=this.y+66;
+  if(s.pad&&s.pad.drawn){const cv=s.pad.canvas;const k=Math.min(w/cv.width,80/cv.height);const dw=cv.width*k,dh=cv.height*k;c.drawImage(cv,x+(w-dw)/2,base-dh+18,dw,dh)}
+  c.strokeStyle=INK;c.lineWidth=1;c.beginPath();c.moveTo(x,base+20);c.lineTo(x+w,base+20);c.stroke();c.font=F(400,12.5,LATO);c.fillStyle=INK;c.textAlign='center';c.fillText(s.l,x+w/2,base+36);c.textAlign='left'});this.y+=106}
+}
+
+/* ---------- PDF ---------- */
+async function toPDF(pages){const enc=new TextEncoder();const parts=[];let off=0;const offs=[];const push=b=>{if(typeof b==='string')b=enc.encode(b);parts.push(b);off+=b.length};
+ const bufs=await Promise.all(pages.map(cv=>new Promise(r=>cv.toBlob(b=>r(b),'image/jpeg',0.9)).then(b=>b.arrayBuffer())));
+ push('%PDF-1.4\n%âãÏÓ\n');const N=2+3*pages.length;const obj=(i,s)=>{offs[i]=off;push(i+' 0 obj\n'+s+'\nendobj\n')};
+ obj(1,'<< /Type /Catalog /Pages 2 0 R >>');
+ obj(2,'<< /Type /Pages /Kids ['+pages.map((_,i)=>(3+3*i)+' 0 R').join(' ')+'] /Count '+pages.length+' >>');
+ pages.forEach((cv,i)=>{const p=3+3*i;obj(p,'<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /XObject << /Im0 '+(p+2)+' 0 R >> >> /Contents '+(p+1)+' 0 R >>');
+  const cs='q 595.28 0 0 841.89 0 0 cm /Im0 Do Q';obj(p+1,'<< /Length '+cs.length+' >>\nstream\n'+cs+'\nendstream');
+  offs[p+2]=off;push((p+2)+' 0 obj\n<< /Type /XObject /Subtype /Image /Width '+cv.width+' /Height '+cv.height+' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length '+bufs[i].byteLength+' >>\nstream\n');push(new Uint8Array(bufs[i]));push('\nendstream\nendobj\n')});
+ const xr=off;let x='xref\n0 '+(N+1)+'\n0000000000 65535 f \n';for(let i=1;i<=N;i++)x+=String(offs[i]).padStart(10,'0')+' 00000 n \n';push(x);push('trailer\n<< /Size '+(N+1)+' /Root 1 0 R >>\nstartxref\n'+xr+'\n%%EOF\n');
+ return new Blob(parts,{type:'application/pdf'})}
+
+function dataExt(){const d=v('data')||hoje();const [Y,Mo,D]=d.split('-').map(Number);return{iso:d,txt:`${v('cidade')||CONFIG.cidade}, ${D} de ${MESES[Mo-1]} de ${Y}.`}}
+function stampTxt(){const n=new Date();return `Documento preenchido e assinado eletronicamente em ${n.toLocaleDateString('pt-BR')} às ${n.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}.`}
+
+function buildAnamnese(){const R=new Doc('Ficha de Anamnese',stampTxt());
+ R.sec('Identificação');
+ R.fields([['Nome',v('a-nome'),.76],['Idade',v('a-idade'),.24]]);
+ R.fields([['CPF',v('a-cpf'),.31],['Telefone',v('a-tel'),.31],['E-mail',v('a-email'),.38]]);
+R.fields([['Endereço',v('a-end'),1]]);R.fields([['Contato de emergência',v('a-emerg'),1]]);
+ R.sec('Histórico de Saúde Geral');
+ QS1.forEach(q=>R.yn(q.t,yn(q.n),q.m,extra(q.n)));
+ R.text('Possui alguma das condições abaixo?');
+ R.checks(COND.map((t,i)=>[t,ck('c'+i)]).concat([['Outras: '+v('c-outras'),!!v('c-outras')]]));
+ QS2.forEach(q=>R.yn(q.t,yn(q.n),q.m,extra(q.n)));
+ R.sec('Hábitos e Condições Bucais');
+ R.checks([['Tabagista',ck('h-tab')],['Uso de bebidas alcoólicas',ck('h-alc')],['Bruxismo/rangimento',ck('h-brux')],['Outro: '+v('h-outro'),!!v('h-outro')]]);
+ QH.forEach(q=>R.yn(q.t,yn(q.n),q.m,extra(q.n)));
+ R.sec('Para as Mulheres');R.ynLine([['Está grávida?',yn('grav')],['Amamentando?',yn('amam')],['Usa anticoncepcional?',yn('antic')]]);
+ R.sec('Observações Adicionais');const o=v('a-obs');R.box(o||'Nenhuma observação.','left',!o);
+ R.box(DECL,'center');
+ const dt=dataExt();R.dateLine(dt.txt,v('clinica')?'Local de atendimento: '+v('clinica'):'');
+ R.sigs([{pad:pads.pa,l:'Assinatura do(a) Paciente'}]);return R}
+function buildTermo(){const R=new Doc('Termo de Consentimento Informado',stampTxt());R.y-=2;R.pill('Implante Dentário');R.y+=6;
+ R.fields([['Eu',v('t-nome'),.66],['CPF nº',v('t-cpf'),.34]]);R.y+=4;
+ TERMO.forEach(p=>R.para(p));
+ R.sec('Referências do(s) Implante(s)');
+ const rows=$$('#imps .imp').map(d=>[...d.querySelectorAll('input')].map(i=>i.value.trim())).filter(r=>r.some(Boolean));
+ if(rows.length)R.table(rows);
+ fotos.forEach(f=>R.image(f));
+ if(!rows.length&&!fotos.length)R.box('Não informado no momento do preenchimento.','left',true);
+ const dt=dataExt();R.dateLine(dt.txt,v('clinica')?'Local de atendimento: '+v('clinica'):'');
+ R.sigs([{pad:pads.pt,l:'Assinatura do(a) Paciente'},{pad:pads.pd,l:PROF+' – '+CONFIG.cro}]);return R}
+
+function validar(){const e=[];if(aba==='anamnese'){if(!v('a-nome'))e.push('o nome do paciente');if(!ck('a-decl'))e.push('a confirmação da declaração');if(!pads.pa.drawn)e.push('a assinatura do paciente')}
+ else{if(!v('t-nome'))e.push('o nome do paciente');if(!ck('t-ok'))e.push('a confirmação de leitura do termo');if(!pads.pt.drawn)e.push('a assinatura do paciente')}
+ const box=$(aba==='anamnese'?'#a-err':'#t-err');box.textContent=e.length?'Falta preencher: '+e.join(', ')+'.':'';return!e.length}
+
+/* ---------- salvar ---------- */
+let dl=null;(async()=>{try{if(window.claude&&window.claude.use)dl=await window.claude.use('downloads')}catch(_){dl=null}})();
+let atual=null;
+const nomeArq=()=>{const n=(aba==='anamnese'?v('a-nome'):v('t-nome')).replace(/[\\/:*?"<>|]/g,'').slice(0,60)||'Paciente';return (aba==='anamnese'?'Anamnese':'Termo de Consentimento')+' - '+n+' - '+dataExt().iso+'.pdf'};
+const msg=t=>$('#ov-msg').textContent=t;
+$('#gerar').onclick=async()=>{if(!validar()){(aba==='anamnese'?$('#a-err'):$('#t-err')).scrollIntoView({block:'center'});return}
+ const b=$('#gerar');b.disabled=true;b.textContent='Gerando…';
+ try{await Promise.all(['600 23px "Cormorant Garamond"','italic 600 34px "Cormorant Garamond"','400 13px Lato','700 13px Lato','italic 400 13px Lato'].map(f=>document.fonts.load(f).catch(()=>0)));
+  const R=aba==='anamnese'?buildAnamnese():buildTermo();const blob=await toPDF(R.pages);atual={blob,name:nomeArq()};
+  $('#ov-img').src=R.pages[0].toDataURL('image/jpeg',.7);$('#ov-info').textContent=`${atual.name} · ${R.pages.length} página${R.pages.length>1?'s':''} · ${Math.round(blob.size/1024)} KB`;msg('');
+  let canShare=false;try{canShare=!dl&&!!navigator.canShare&&navigator.canShare({files:[new File([blob],atual.name,{type:'application/pdf'})]})}catch(_){}
+  $('#compart').hidden=!canShare;$('#ov').classList.add('on');$('#salvar').focus()}
+ catch(err){(aba==='anamnese'?$('#a-err'):$('#t-err')).textContent='Não foi possível gerar o PDF neste aparelho.'}
+ finally{b.disabled=false;b.textContent='Gerar PDF'}};
+$('#salvar').onclick=async()=>{if(!atual)return;
+ if(dl){try{const r=await dl.save({filename:atual.name,data:atual.blob});msg(r&&r.status==='delivered'?'PDF enviado.':'PDF salvo. Agora é só enviar ou imprimir.')}catch(e){const c=e&&e.code;msg(c==='declined'?'Salvamento cancelado.':c==='rate_limited'?'Aguarde um instante e tente de novo.':'Não foi possível salvar aqui. Abra esta página no navegador do celular.')}return}
+ try{const u=URL.createObjectURL(atual.blob);const a=document.createElement('a');a.href=u;a.download=atual.name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000);msg('Download iniciado.')}catch(_){msg('Não foi possível salvar neste aparelho.')}};
+$('#compart').onclick=async()=>{try{await navigator.share({files:[new File([atual.blob],atual.name,{type:'application/pdf'})],title:atual.name})}catch(_){}};
+const fechar=()=>{$('#ov').classList.remove('on');$('#gerar').focus()};
+$('#fechar').onclick=fechar;$('#ov').addEventListener('click',e=>{if(e.target.id==='ov')fechar()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#ov').classList.contains('on'))fechar()});
+
+/* ---------- nova ficha ---------- */
+let armado=false,tm=null;
+$('#novo').onclick=()=>{const b=$('#novo');if(!armado){armado=true;b.textContent='Toque de novo para limpar';tm=setTimeout(()=>{armado=false;b.textContent='Nova ficha'},3500);return}
+ clearTimeout(tm);armado=false;b.textContent='Nova ficha';
+ $$('main input[type=text],main input[type=email],main input[type=tel],main textarea').forEach(i=>{if(i.id!=='cidade'&&i.id!=='clinica')i.value=''});
+ $$('main input[type=checkbox],main input[type=radio]').forEach(i=>i.checked=false);$$('.q .more').forEach(m=>m.hidden=true);
+ $('#imps').innerHTML='';impN=0;addImp();fotos=[];thumbs();Object.values(pads).forEach(p=>p.clear());$('#data').value=hoje();$('#a-err').textContent='';$('#t-err').textContent='';atual=null;show('anamnese')};
+}
+</script>
+<script>
+if('serviceWorker' in navigator&&location.protocol==='https:'){window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})})}
+</script>
+</body>
+</html>
