@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- ARQUIVO DO APP: APP DO DR. YGOR (Odonto) — publicar SOMENTE em ygor-odonto.github.io -->
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
@@ -1046,6 +1047,10 @@ $('#cf-imp').onchange=e=>{const f=e.target.files[0];e.target.value='';if(!f)retu
 </script>
 <script>
 if('serviceWorker' in navigator&&location.protocol==='https:'){window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})})}
+</script>
+<script>
+/* Trava de segurança: avisa se este arquivo for publicado no endereço errado */
+(function(){var h=location.hostname,ok="ygor-odonto.github.io".split("/")[0];if(/github\.io$/.test(h)&&h!==ok){var d=document.createElement("div");d.setAttribute("role","alert");d.style.cssText="position:fixed;left:0;right:0;top:0;z-index:2147483647;background:#B3261E;color:#fff;font:700 16px/1.4 Arial,sans-serif;padding:14px 16px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.4)";d.textContent="ATENÇÃO: este arquivo é do APP DO DR. YGOR (Odonto) e foi publicado no lugar errado (repositório errado). Envie o index.html correto para este repositório.";document.body.appendChild(d)}})();
 </script>
 </body>
 </html>
